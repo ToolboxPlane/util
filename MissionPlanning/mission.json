@@ -1,0 +1,23 @@
+[
+    {
+        "lat": 48.428546971466986,
+        "lon": 9.923653259723908,
+        "height": 0,
+        "maxDelta": 10,
+        "landingAllowed": false
+    },
+    {
+        "lat": 48.421512757348125,
+        "lon": 9.930047646015353,
+        "height": 0,
+        "maxDelta": 10,
+        "landingAllowed": false
+    },
+    {
+        "lat": 48.41886399528996,
+        "lon": 9.925155296772692,
+        "height": 0,
+        "maxDelta": 10,
+        "landingAllowed": false
+    }
+]
