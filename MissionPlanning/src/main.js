@@ -34,16 +34,17 @@ let map = {
                 this.vectorLayer.addFeatures(line);
             }
         }
+        $("#spanDistance").text(planning.getLength().toFixed(0) + "m");
     },
 
     init: function () {
         OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
             defaultHandlerOptions: {
                 'single': true,
-                'double': false,
+                'let': false,
                 'pixelTolerance': 0,
                 'stopSingle': false,
-                'stopDouble': false
+                'stoplet': false
             },
 
             initialize: function (options) {
@@ -103,12 +104,35 @@ let map = {
 
 
 let planning = {
-    Waypoint: function (lat, lon, height, maxDelta, landingAllowed) {
+    Waypoint: function (lat, lon, altitude, maxDelta, landingAllowed) {
         this.lat = lat;
         this.lon = lon;
-        this.height = height;
+        this.altitude = altitude;
         this.maxDelta = maxDelta;
         this.landingAllowed = landingAllowed;
+
+        this.distanceTo = function (wp) {
+            const EARTH_RADIUS = 6371E3;
+            let phi1 = this.lon / 180 * Math.PI;
+            let sigma1 = Math.PI/2 - (this.lat / 180 * Math.PI);
+            let r1 = EARTH_RADIUS + this.altitude;
+            let x1 = r1 * Math.sin(sigma1) * Math.cos(phi1);
+            let y1 = r1 * Math.sin(sigma1) * Math.sin(phi1);
+            let z1 = r1 * Math.cos(sigma1);
+
+            let phi2 = wp.lon / 180 * Math.PI;
+            let sigma2 = Math.PI/2 - (wp.lat / 180 * Math.PI);
+            let r2 = EARTH_RADIUS + wp.altitude;
+            let x2 = r2 * Math.sin(sigma2) * Math.cos(phi2);
+            let y2 = r2 * Math.sin(sigma2) * Math.sin(phi2);
+            let z2 = r2 * Math.cos(sigma2);
+
+            let dx = x1 - x2;
+            let dy = y1 - y2;
+            let dz = z1 - z2;
+
+            return Math.sqrt(dx*dx + dy*dy + dz*dz);
+        }
     },
 
     waypoints: Array(),
@@ -116,17 +140,17 @@ let planning = {
     addWaypoint: function (lat, lon, callback) {
         $.getJSON("https://maps.googleapis.com/maps/api/elevation/json?" +
             "locations="+lat+","+lon+"&key=AIzaSyDnZRJg6wth7Rchyq8K0y7WkfmqJNAEyfQ", function (res) {
-            let height  = res.results[0].elevation + Number($("#inputHeight").val());
+            let altitude  = res.results[0].elevation + Number($("#inputHeight").val());
             let maxDelta = Number($("#inputMaxDelta").val());
             let landingAllowed = false;
 
-            planning.waypoints.push(new planning.Waypoint(lat, lon, height, maxDelta, landingAllowed));
+            planning.waypoints.push(new planning.Waypoint(lat, lon, altitude, maxDelta, landingAllowed));
 
             $("#listBody").append(
                 "<tr>" +
                 "<td contenteditable=\'true\'>"+lat.toFixed(3)+"</td>" +
                 "<td contenteditable=\'true\'>"+lon.toFixed(3)+"</td>" +
-                "<td contenteditable=\'true\'>"+height.toFixed(1)+"</td>" +
+                "<td contenteditable=\'true\'>"+altitude.toFixed(1)+"</td>" +
                 "<td contenteditable=\'true\'>"+maxDelta.toFixed(1)+"</td>" +
                 "<td contenteditable=\'true\'>"+(landingAllowed?"Yes":"No")+"</td>" +
                 "<td><a class=\"icon icon-cancel-circled buttonDelete\" href='#'></a></td>"+
@@ -134,17 +158,25 @@ let planning = {
             );
             callback();
         });
-
-
     },
 
     save: function (filename) {
-        let string = JSON.stringify(this.waypoints, null, 4);
-        fs.writeFile(filename, string, function (error) {
-            if(error) {
+        let text = JSON.stringify(this.waypoints, null, 4);
+
+        fs.writeFile(filename, text, function (error) {
+            if (error) {
                 console.warn("Errror writing file!");
             }
         })
+    },
+
+
+    getLength: function () {
+        let length = 0;
+        for(let c=1; c<this.waypoints.length; c++) {
+            length += this.waypoints[c-1].distanceTo(this.waypoints[c]);
+        }
+        return length;
     }
 };
 
@@ -157,7 +189,9 @@ $(document).ready(function () {
             "title": "Save Mission",
             "defaultPath": "mission.json"
         });
-        planning.save(filename);
+        if(filename != null) {
+            planning.save(filename);
+        }
     });
 
 
@@ -173,7 +207,7 @@ $(document).ready(function () {
                 planning.waypoints[row].lon = Number(newVal);
                 break;
             case 2:
-                planning.waypoints[row].height = Number(newVal);
+                planning.waypoints[row].altitude = Number(newVal);
                 break;
             case 3:
                 planning.waypoints[row].maxDelta = Number(newVal);

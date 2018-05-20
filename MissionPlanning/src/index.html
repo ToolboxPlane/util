@@ -18,7 +18,8 @@
     </header>
     <div class="window-content">
         <div class="pane-group">
-            <div class="sidebar" style="width: 40%">
+            <div class="sidebar" style="width: 40%; overflow: auto">
+                <h4>Configuration</h4>
                 <div class="form-group">
                     <label>Height above ground</label>
                     <input type="number" min="0" class="form-control" value="50" id="inputHeight">
@@ -27,7 +28,8 @@
                     <label>Max Delta</label>
                     <input type="number" min="0" class="form-control" value="10" id="inputMaxDelta">
                 </div>
-                <h3>Waypoints</h3>
+
+                <h4>Waypoints</h4>
                 <table class="table-striped">
                     <thead>
                     <tr>
@@ -42,6 +44,9 @@
                     <tbody id="listBody">
                     </tbody>
                 </table>
+
+                <h4>Information</h4>
+                Distance: <span id="spanDistance">0m</span>
             </div>
             <div class="pane">
                 <div id="map" style="height:100%"></div>
