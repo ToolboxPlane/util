@@ -3,6 +3,39 @@ const {dialog} = require('electron').remote;
 
 
 let map = {
+    map: null,
+    vectorLayer: null,
+
+    drawPath: function() {
+        this.vectorLayer.destroyFeatures();
+        for(let c=0; c<planning.waypoints.length; c++) {
+            let position = new OpenLayers.Geometry.Point(planning.waypoints[c].lon, planning.waypoints[c].lat);
+            position.transform("EPSG:4326", this.map.getProjectionObject());
+            let point = new OpenLayers.Feature.Vector(position,
+                {
+                    salutation: "",
+                    Lon: planning.waypoints[c].lon,
+                    Lat: planning.waypoints[c].lat
+                });
+
+            this.vectorLayer.addFeatures(point);
+
+            if (c > 0) {
+                let lastPoint = new OpenLayers.Geometry.Point(
+                    planning.waypoints[c - 1].lon,
+                    planning.waypoints[c - 1].lat
+                );
+                lastPoint.transform("EPSG:4326", this.map.getProjectionObject());
+                let linePoints = Array(
+                    lastPoint,
+                    position
+                );
+                let line = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.LineString(linePoints));
+                this.vectorLayer.addFeatures(line);
+            }
+        }
+    },
+
     init: function () {
         OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
             defaultHandlerOptions: {
@@ -29,70 +62,43 @@ let map = {
 
             trigger: function (e) {
                 //A click happened!
-                let lonlat = map.getLonLatFromViewPortPx(e.xy);
+                let lonlat = map.map.getLonLatFromViewPortPx(e.xy);
 
                 lonlat.transform(
                     new OpenLayers.Projection("EPSG:900913"),
                     new OpenLayers.Projection("EPSG:4326")
                 );
 
-
-                let position = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat);
-                position.transform("EPSG:4326", map.getProjectionObject());
-                let feature = new OpenLayers.Feature.Vector(position,
-                    {
-                        salutation: "",
-                        Lon: lonlat.lon,
-                        Lat: lonlat.lat
-                    });
-
-                vectorLayer.addFeatures(feature);
-
-                if (planning.waypoints.length > 0) {
-                    let lastPoint = new OpenLayers.Geometry.Point(
-                        planning.waypoints[planning.waypoints.length - 1].lon,
-                        planning.waypoints[planning.waypoints.length - 1].lat
-                    );
-                    lastPoint.transform("EPSG:4326", map.getProjectionObject());
-                    let linePoints = Array(
-                        lastPoint,
-                        position
-                    );
-                    let line = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.LineString(linePoints));
-                    vectorLayer.addFeatures(line);
-                }
-                planning.addWaypoint(lonlat.lat, lonlat.lon);
+                planning.addWaypoint(lonlat.lat, lonlat.lon,function () {
+                    map.drawPath();
+                });
             }
         });
 
 
-        map = new OpenLayers.Map("map");
-        let mapnik = new OpenLayers.Layer.OSM();
+        this.map = new OpenLayers.Map("map");
         let fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
         let toProjection = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
         let position = new OpenLayers.LonLat(9.9300282, 48.4242041).transform(fromProjection, toProjection);
-        let zoom = 15;
 
-        map.addLayer(mapnik);
-        map.setCenter(position, zoom);
+        this.map.addLayer(new OpenLayers.Layer.OSM());
+        this.map.setCenter(position, 15);
 
-        let markers = new OpenLayers.Layer.Markers("Markers");
-        map.addLayer(markers);
-
-        let vectorLayer = new OpenLayers.Layer.Vector("Vector Layer", {
+        this.vectorLayer = new OpenLayers.Layer.Vector("Vector Layer", {
             projection: "EPSG:4326",
             style: {
                 fillColor: "#0000FF",
                 pointRadius: "8px"
             }
         });
-        map.addLayer(vectorLayer);
+        this.map.addLayer(this.vectorLayer);
 
 
         let click = new OpenLayers.Control.Click();
-        map.addControl(click);
+        this.map.addControl(click);
         click.activate();
-    }
+    },
+
 };
 
 
@@ -107,7 +113,7 @@ let planning = {
 
     waypoints: Array(),
 
-    addWaypoint: function (lat, lon) {
+    addWaypoint: function (lat, lon, callback) {
         $.getJSON("https://maps.googleapis.com/maps/api/elevation/json?" +
             "locations="+lat+","+lon+"&key=AIzaSyDnZRJg6wth7Rchyq8K0y7WkfmqJNAEyfQ", function (res) {
             let height  = res.results[0].elevation + Number($("#inputHeight").val());
@@ -118,13 +124,15 @@ let planning = {
 
             $("#listBody").append(
                 "<tr>" +
-                "<td>"+lat.toFixed(3)+"</td>" +
-                "<td>"+lon.toFixed(3)+"</td>" +
-                "<td>"+height.toFixed(1)+"m</td>" +
-                "<td>"+maxDelta.toFixed(1)+"m</td>" +
-                "<td>"+(landingAllowed?"Yes":"No")+"</td>" +
+                "<td contenteditable=\'true\'>"+lat.toFixed(3)+"</td>" +
+                "<td contenteditable=\'true\'>"+lon.toFixed(3)+"</td>" +
+                "<td contenteditable=\'true\'>"+height.toFixed(1)+"</td>" +
+                "<td contenteditable=\'true\'>"+maxDelta.toFixed(1)+"</td>" +
+                "<td contenteditable=\'true\'>"+(landingAllowed?"Yes":"No")+"</td>" +
+                "<td><a class=\"icon icon-cancel-circled buttonDelete\" href='#'></a></td>"+
                 "</tr>"
             );
+            callback();
         });
 
 
@@ -151,4 +159,38 @@ $(document).ready(function () {
         });
         planning.save(filename);
     });
+
+
+    $("#listBody").on("input", function (event) {
+        let col = $(event.target).index();
+        let row = $(event.target).closest('tr').index();
+        let newVal = $(event.target).text();
+        switch (col) {
+            case 0:
+                planning.waypoints[row].lat = Number(newVal);
+                break;
+            case 1:
+                planning.waypoints[row].lon = Number(newVal);
+                break;
+            case 2:
+                planning.waypoints[row].height = Number(newVal);
+                break;
+            case 3:
+                planning.waypoints[row].maxDelta = Number(newVal);
+                break;
+            case 4:
+                planning.waypoints[row].landingAllowed = newVal === "Yes";
+                break;
+            default:
+                console.warn("Event handling fuckup");
+        }
+        map.drawPath();
+    });
+
+    $(document).on("click", ".buttonDelete", function (event) {
+        let row = $(event.target).closest('tr');
+        planning.waypoints.splice(row.index(), 1);
+        map.drawPath();
+        row.remove();
+    })
 });
