@@ -34,7 +34,6 @@ let map = {
                 this.vectorLayer.addFeatures(line);
             }
         }
-        $("#spanDistance").text(planning.getLength().toFixed(0) + "m");
     },
 
     init: function () {
@@ -70,9 +69,7 @@ let map = {
                     new OpenLayers.Projection("EPSG:4326")
                 );
 
-                planning.addWaypoint(lonlat.lat, lonlat.lon,function () {
-                    map.drawPath();
-                });
+                planning.addWaypoint(lonlat.lat, lonlat.lon);
             }
         });
 
@@ -137,27 +134,40 @@ let planning = {
 
     waypoints: Array(),
 
-    addWaypoint: function (lat, lon, callback) {
+    addWaypoint: function (lat, lon) {
         $.getJSON("https://maps.googleapis.com/maps/api/elevation/json?" +
-            "locations="+lat+","+lon+"&key=AIzaSyDnZRJg6wth7Rchyq8K0y7WkfmqJNAEyfQ", function (res) {
+            "locations="+lat+","+lon+"&key="+Config.MAPS_API_KEY, function (res) {
             let altitude  = res.results[0].elevation + Number($("#inputHeight").val());
             let maxDelta = Number($("#inputMaxDelta").val());
             let landingAllowed = false;
 
             planning.waypoints.push(new planning.Waypoint(lat, lon, altitude, maxDelta, landingAllowed));
 
-            $("#listBody").append(
-                "<tr>" +
-                "<td contenteditable=\'true\'>"+lat.toFixed(3)+"</td>" +
-                "<td contenteditable=\'true\'>"+lon.toFixed(3)+"</td>" +
-                "<td contenteditable=\'true\'>"+altitude.toFixed(1)+"</td>" +
-                "<td contenteditable=\'true\'>"+maxDelta.toFixed(1)+"</td>" +
-                "<td contenteditable=\'true\'>"+(landingAllowed?"Yes":"No")+"</td>" +
+            planning.updateAllViews();
+        });
+    },
+
+    removeWaypoint: function(index) {
+        planning.waypoints.splice(index, 1);
+        this.updateAllViews();
+    },
+
+    updateAllViews: function() {
+        let text = "";
+        for(let c=0; c<this.waypoints.length; c++) {
+            text += "<tr>" +
+                "<td contenteditable=\'true\'>"+this.waypoints[c].lat.toFixed(3)+"</td>" +
+                "<td contenteditable=\'true\'>"+this.waypoints[c].lon.toFixed(3)+"</td>" +
+                "<td contenteditable=\'true\'>"+this.waypoints[c].altitude.toFixed(1)+"</td>" +
+                "<td contenteditable=\'true\'>"+this.waypoints[c].maxDelta.toFixed(1)+"</td>" +
+                "<td contenteditable=\'true\'>"+(this.waypoints[c].landingAllowed?"Yes":"No")+"</td>" +
                 "<td><a class=\"icon icon-cancel-circled buttonDelete\" href='#'></a></td>"+
                 "</tr>"
-            );
-            callback();
-        });
+        }
+        $("#listBody").html(text);
+
+        map.drawPath();
+        $("#spanDistance").text(planning.getLength().toFixed(0) + "m");
     },
 
     save: function (filename) {
@@ -166,6 +176,24 @@ let planning = {
         fs.writeFile(filename, text, function (error) {
             if (error) {
                 console.warn("Errror writing file!");
+            }
+        })
+    },
+
+    load: function (filename) {
+        fs.readFile(filename, 'utf8', (err, data) => {
+            if(err != null) {
+                console.warn(err);
+            } else {
+                json = JSON.parse(data);
+
+                // A little workaround to get all methods of the waypoint-objects
+                planning.waypoints = [];
+                for(let c=0; c<json.length; c++) {
+                    planning.waypoints.push(
+                        new planning.Waypoint(json[c].lat, json[c].lon, json[c].altitude, json[c].maxDelta, json[c].landingAllowed));
+                }
+                this.updateAllViews();
             }
         })
     },
@@ -191,6 +219,16 @@ $(document).ready(function () {
         });
         if(filename != null) {
             planning.save(filename);
+        }
+    });
+
+
+    $("#buttonOpen").click(function () {
+        let filename = dialog.showOpenDialog({
+            "title": "Load Mission"
+        });
+        if(filename != null) {
+            planning.load(filename[0]);
         }
     });
 
@@ -223,8 +261,6 @@ $(document).ready(function () {
 
     $(document).on("click", ".buttonDelete", function (event) {
         let row = $(event.target).closest('tr');
-        planning.waypoints.splice(row.index(), 1);
-        map.drawPath();
-        row.remove();
+        planning.removeWaypoint(row.index())
     })
 });

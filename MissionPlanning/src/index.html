@@ -11,9 +11,14 @@
         <h1 class="title">Mission Planning</h1>
 
         <div class="toolbar-actions">
-            <button class="btn btn-primary pull-right" id="buttonSave">
-                Save
-            </button>
+            <div class="btn-group">
+                <button class="btn btn-default" id="buttonOpen">
+                    <span class="icon icon-folder"></span>
+                </button>
+                <button class="btn btn-default" id="buttonSave">
+                    <span class="icon icon-floppy"></span>
+                </button>
+            </div>
         </div>
     </header>
     <div class="window-content">
@@ -60,6 +65,7 @@
 }</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="OpenLayers/OpenLayers.js"></script>
+<script src="config.js"></script>
 <script src="main.js"></script>
 <script>if (window.module) module = window.module;</script>
 </body>

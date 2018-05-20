@@ -1,0 +1,128 @@
+[
+    {
+        "lat": 48.423905068965375,
+        "lon": 9.930079832523528,
+        "altitude": 647.0484008789062,
+        "maxDelta": 10,
+        "landingAllowed": false
+    },
+    {
+        "lat": 48.424517368721666,
+        "lon": 9.929736509769958,
+        "altitude": 636.7631225585938,
+        "maxDelta": 10,
+        "landingAllowed": false
+    },
+    {
+        "lat": 48.42549988082305,
+        "lon": 9.929586306065438,
+        "altitude": 624.6904907226562,
+        "maxDelta": 10,
+        "landingAllowed": false
+    },
+    {
+        "lat": 48.42592705407339,
+        "lon": 9.930787935703387,
+        "altitude": 626.3359375,
+        "maxDelta": 10,
+        "landingAllowed": false
+    },
+    {
+        "lat": 48.425912815023096,
+        "lon": 9.933040991276563,
+        "altitude": 632.4486083984375,
+        "maxDelta": 10,
+        "landingAllowed": false
+    },
+    {
+        "lat": 48.42555683746427,
+        "lon": 9.934070959538177,
+        "altitude": 640.95947265625,
+        "maxDelta": 10,
+        "landingAllowed": false
+    },
+    {
+        "lat": 48.42483063551193,
+        "lon": 9.934585943668983,
+        "altitude": 651.204833984375,
+        "maxDelta": 10,
+        "landingAllowed": false
+    },
+    {
+        "lat": 48.42386235010245,
+        "lon": 9.934864893406203,
+        "altitude": 658.8925170898438,
+        "maxDelta": 10,
+        "landingAllowed": false
+    },
+    {
+        "lat": 48.42250956753903,
+        "lon": 9.933899298160942,
+        "altitude": 661.5695190429688,
+        "maxDelta": 10,
+        "landingAllowed": false
+    },
+    {
+        "lat": 48.41460574981353,
+        "lon": 9.93132437750601,
+        "altitude": 601.4054565429688,
+        "maxDelta": 10,
+        "landingAllowed": false
+    },
+    {
+        "lat": 48.40793995390426,
+        "lon": 9.925230398624501,
+        "altitude": 551.4615478515625,
+        "maxDelta": 10,
+        "landingAllowed": false
+    },
+    {
+        "lat": 47.715119373062315,
+        "lon": 9.42483748480496,
+        "altitude": 488.3586730957031,
+        "maxDelta": 10,
+        "landingAllowed": false
+    },
+    {
+        "lat": 47.70681738314767,
+        "lon": 9.410482302156936,
+        "altitude": 503.2483520507812,
+        "maxDelta": 10,
+        "landingAllowed": false
+    },
+    {
+        "lat": 47.70597989160493,
+        "lon": 9.405332460847973,
+        "altitude": 476.8072814941406,
+        "maxDelta": 10,
+        "landingAllowed": false
+    },
+    {
+        "lat": 47.70704841292906,
+        "lon": 9.399324312654633,
+        "altitude": 476.5296936035156,
+        "maxDelta": 10,
+        "landingAllowed": false
+    },
+    {
+        "lat": 47.70701953426276,
+        "lon": 9.395504847017222,
+        "altitude": 471.3959045410156,
+        "maxDelta": 10,
+        "landingAllowed": false
+    },
+    {
+        "lat": 47.70727944168698,
+        "lon": 9.39335907980493,
+        "altitude": 470.7026977539062,
+        "maxDelta": 10,
+        "landingAllowed": false
+    },
+    {
+        "lat": 47.70733719871677,
+        "lon": 9.390183344331922,
+        "altitude": 470.994873046875,
+        "maxDelta": 10,
+        "landingAllowed": false
+    }
+]
