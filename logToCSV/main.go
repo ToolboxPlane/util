@@ -43,7 +43,7 @@ func main() {
 				for c := 0; c < cMax; c++ {
 					data += strconv.FormatInt(p.Data.Channels[c], 10) + ";"
 				}
-				csvData = append(csvData, []byte(strconv.FormatInt(p.Timestamp, 10)+";"+data[0:len(data)-1]+"\n")...)
+				csvData = append(csvData, []byte(strconv.FormatInt(p.Timestamp, 10)+";"+strconv.FormatInt(p.Data.Header.TransmitterID, 10)+";"+data[0:len(data)-1]+"\n")...)
 			}
 		}
 	}
