@@ -13,7 +13,7 @@ let map = {
             position.transform("EPSG:4326", this.map.getProjectionObject());
             let point = new OpenLayers.Feature.Vector(position,
                 {
-                    salutation: "",
+                    salutation: "Test",
                     Lon: planning.waypoints[c].lon,
                     Lat: planning.waypoints[c].lat
                 });
@@ -171,7 +171,11 @@ let planning = {
     },
 
     save: function (filename) {
-        let text = JSON.stringify(this.waypoints, null, 4);
+        let text = "0\nTimestamp; Lat; Lon; Altitude; MaxDelta; LandingAllowed";
+        for(let c=0; c<this.waypoints.length; c++) {
+            text += "\n 0; " + this.waypoints[c].lat + "; " + this.waypoints[c].lon + "; " + this.waypoints[c].altitude
+             + "; " + this.waypoints[c].maxDelta + "; " + (this.waypoints[c].landingAllowed ? "1" : "0");
+        }
 
         fs.writeFile(filename, text, function (error) {
             if (error) {
@@ -185,13 +189,15 @@ let planning = {
             if(err != null) {
                 console.warn(err);
             } else {
-                json = JSON.parse(data);
+                let lines = data.split("\n");
 
                 // A little workaround to get all methods of the waypoint-objects
                 planning.waypoints = [];
-                for(let c=0; c<json.length; c++) {
+                for(let c=2; c<lines.length; c++) {
+                    let items = lines[c].split(";");
                     planning.waypoints.push(
-                        new planning.Waypoint(json[c].lat, json[c].lon, json[c].altitude, json[c].maxDelta, json[c].landingAllowed));
+                        new planning.Waypoint(
+                            Number(items[1]), Number(items[2]), Number(items[3]), Number(items[4]), Boolean(items[5])));
                 }
                 this.updateAllViews();
             }
@@ -215,7 +221,7 @@ $(document).ready(function () {
     $("#buttonSave").click(function () {
         let filename = dialog.showSaveDialog({
             "title": "Save Mission",
-            "defaultPath": "mission.json"
+            "defaultPath": "mission.csv"
         });
         if(filename != null) {
             planning.save(filename);
