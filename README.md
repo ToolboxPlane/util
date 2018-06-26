@@ -7,4 +7,7 @@ Converts JSON log files of RClib data to CSV
 Show the all channels by one transmitter in a simple ui
 
 ## MissionPlanning
-Generate a json file to provide as a mission for the FlightComputer.
+Generate a csv file to provide as a mission for the FlightComputer.
+
+## Ground Station
+Show the information contained in all received rcLib-Packages
