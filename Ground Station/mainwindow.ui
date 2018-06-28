@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>754</width>
-    <height>520</height>
+    <width>752</width>
+    <height>797</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -60,1156 +60,1526 @@
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <layout class="QFormLayout" name="formLayout">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_53">
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>PDB</string>
-          </property>
-         </widget>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>2</number>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Raw</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <layout class="QFormLayout" name="formLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_53">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>PDB</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_17">
+            <property name="text">
+             <string>Status</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="pdb0">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_18">
+            <property name="text">
+             <string>U_VCC</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="pdb1">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_19">
+            <property name="text">
+             <string>I_VCC</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QSpinBox" name="pdb2">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_20">
+            <property name="text">
+             <string>U_5V</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QSpinBox" name="pdb3">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_21">
+            <property name="text">
+             <string>I_5V</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QSpinBox" name="pdb4">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_22">
+            <property name="text">
+             <string>Temperature</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QSpinBox" name="pdb5">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_23">
+            <property name="text">
+             <string>Empty</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QSpinBox" name="pdb6">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_24">
+            <property name="text">
+             <string>Empty</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QSpinBox" name="pdb7">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_54">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>LoRa-Remote</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="label_25">
+            <property name="text">
+             <string>Right-X</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="1">
+           <widget class="QSpinBox" name="lora0">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <widget class="QLabel" name="label_26">
+            <property name="text">
+             <string>Right-Y</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="1">
+           <widget class="QSpinBox" name="lora1">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="0">
+           <widget class="QLabel" name="label_27">
+            <property name="text">
+             <string>Left-X</string>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="1">
+           <widget class="QSpinBox" name="lora2">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="0">
+           <widget class="QLabel" name="label_28">
+            <property name="text">
+             <string>Left-Y</string>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="1">
+           <widget class="QSpinBox" name="lora3">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="0">
+           <widget class="QLabel" name="label_29">
+            <property name="text">
+             <string>Flightmode</string>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="1">
+           <widget class="QSpinBox" name="lora4">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="0">
+           <widget class="QLabel" name="label_30">
+            <property name="text">
+             <string>Armed</string>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="1">
+           <widget class="QSpinBox" name="lora5">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="16" column="0">
+           <widget class="QLabel" name="label_31">
+            <property name="text">
+             <string>Empty</string>
+            </property>
+           </widget>
+          </item>
+          <item row="16" column="1">
+           <widget class="QSpinBox" name="lora6">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="17" column="0">
+           <widget class="QLabel" name="label_32">
+            <property name="text">
+             <string>Empty</string>
+            </property>
+           </widget>
+          </item>
+          <item row="17" column="1">
+           <widget class="QSpinBox" name="lora7">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_17">
-          <property name="text">
-           <string>Status</string>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
-         </widget>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>28</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
-        <item row="1" column="1">
-         <widget class="QSpinBox" name="pdb0">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
+        <item>
+         <layout class="QFormLayout" name="formLayout_3">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Heading</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="fc0">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Roll</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="fc1">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Pitch</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QSpinBox" name="fc2">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Ultrasonic</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QSpinBox" name="fc3">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Barometer</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QSpinBox" name="fc4">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>AIrspeed</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QSpinBox" name="fc5">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Acc-Forw</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QSpinBox" name="fc6">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>Acc-Sidw</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QSpinBox" name="fc7">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>Acc-UpDown</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="QSpinBox" name="fc8">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>Empty</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="1">
+           <widget class="QSpinBox" name="fc9">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>Empty</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="1">
+           <widget class="QSpinBox" name="fc10">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>Aileron-Right</string>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="1">
+           <widget class="QSpinBox" name="fc11">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>VTail-Right</string>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="1">
+           <widget class="QSpinBox" name="fc12">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="0">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>Motor</string>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="1">
+           <widget class="QSpinBox" name="fc13">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="0">
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>VTail-Left</string>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="1">
+           <widget class="QSpinBox" name="fc14">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="16" column="0">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>Aileron-Left</string>
+            </property>
+           </widget>
+          </item>
+          <item row="16" column="1">
+           <widget class="QSpinBox" name="fc15">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_55">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>FlightController</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_18">
-          <property name="text">
-           <string>U_VCC</string>
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
-         </widget>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>28</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
-        <item row="2" column="1">
-         <widget class="QSpinBox" name="pdb1">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_19">
-          <property name="text">
-           <string>I_VCC</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QSpinBox" name="pdb2">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_20">
-          <property name="text">
-           <string>U_5V</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QSpinBox" name="pdb3">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="label_21">
-          <property name="text">
-           <string>I_5V</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QSpinBox" name="pdb4">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="0">
-         <widget class="QLabel" name="label_22">
-          <property name="text">
-           <string>Temperature</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1">
-         <widget class="QSpinBox" name="pdb5">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="0">
-         <widget class="QLabel" name="label_23">
-          <property name="text">
-           <string>Empty</string>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="1">
-         <widget class="QSpinBox" name="pdb6">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="0">
-         <widget class="QLabel" name="label_24">
-          <property name="text">
-           <string>Empty</string>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="1">
-         <widget class="QSpinBox" name="pdb7">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="0">
-         <widget class="QLabel" name="label_54">
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>LoRa-Remote</string>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="0">
-         <widget class="QLabel" name="label_25">
-          <property name="text">
-           <string>Right-X</string>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="1">
-         <widget class="QSpinBox" name="lora0">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="11" column="0">
-         <widget class="QLabel" name="label_26">
-          <property name="text">
-           <string>Right-Y</string>
-          </property>
-         </widget>
-        </item>
-        <item row="11" column="1">
-         <widget class="QSpinBox" name="lora1">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="12" column="0">
-         <widget class="QLabel" name="label_27">
-          <property name="text">
-           <string>Left-X</string>
-          </property>
-         </widget>
-        </item>
-        <item row="12" column="1">
-         <widget class="QSpinBox" name="lora2">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="13" column="0">
-         <widget class="QLabel" name="label_28">
-          <property name="text">
-           <string>Left-Y</string>
-          </property>
-         </widget>
-        </item>
-        <item row="13" column="1">
-         <widget class="QSpinBox" name="lora3">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="14" column="0">
-         <widget class="QLabel" name="label_29">
-          <property name="text">
-           <string>Flightmode</string>
-          </property>
-         </widget>
-        </item>
-        <item row="14" column="1">
-         <widget class="QSpinBox" name="lora4">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="15" column="0">
-         <widget class="QLabel" name="label_30">
-          <property name="text">
-           <string>Armed</string>
-          </property>
-         </widget>
-        </item>
-        <item row="15" column="1">
-         <widget class="QSpinBox" name="lora5">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="16" column="0">
-         <widget class="QLabel" name="label_31">
-          <property name="text">
-           <string>Empty</string>
-          </property>
-         </widget>
-        </item>
-        <item row="16" column="1">
-         <widget class="QSpinBox" name="lora6">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="17" column="0">
-         <widget class="QLabel" name="label_32">
-          <property name="text">
-           <string>Empty</string>
-          </property>
-         </widget>
-        </item>
-        <item row="17" column="1">
-         <widget class="QSpinBox" name="lora7">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
+        <item>
+         <layout class="QFormLayout" name="formLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_56">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>FlightComputer</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_33">
+            <property name="text">
+             <string>Power</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="fcp0">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_34">
+            <property name="text">
+             <string>Pitch-Target</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="fcp1">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_35">
+            <property name="text">
+             <string>Roll-Target</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QSpinBox" name="fcp2">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_36">
+            <property name="text">
+             <string>Empty</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QSpinBox" name="fcp3">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_57">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Taranis</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_37">
+            <property name="text">
+             <string>Throttle</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QSpinBox" name="ta0">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_38">
+            <property name="text">
+             <string>AIleron-Left</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QSpinBox" name="ta1">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_39">
+            <property name="text">
+             <string>Aileron-Right</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QSpinBox" name="ta2">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_40">
+            <property name="text">
+             <string>VTail-Left</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="QSpinBox" name="ta3">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="label_41">
+            <property name="text">
+             <string>VTail-Right</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="1">
+           <widget class="QSpinBox" name="ta4">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <widget class="QLabel" name="label_42">
+            <property name="text">
+             <string>Throttle</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="1">
+           <widget class="QSpinBox" name="ta5">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="0">
+           <widget class="QLabel" name="label_43">
+            <property name="text">
+             <string>Yaw</string>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="1">
+           <widget class="QSpinBox" name="ta6">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="0">
+           <widget class="QLabel" name="label_44">
+            <property name="text">
+             <string>Pitch</string>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="1">
+           <widget class="QSpinBox" name="ta7">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="0">
+           <widget class="QLabel" name="label_45">
+            <property name="text">
+             <string>Roll</string>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="1">
+           <widget class="QSpinBox" name="ta8">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="0">
+           <widget class="QLabel" name="label_46">
+            <property name="text">
+             <string>Arming</string>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="1">
+           <widget class="QSpinBox" name="ta9">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="16" column="0">
+           <widget class="QLabel" name="label_47">
+            <property name="text">
+             <string>Override</string>
+            </property>
+           </widget>
+          </item>
+          <item row="16" column="1">
+           <widget class="QSpinBox" name="ta10">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="17" column="0">
+           <widget class="QLabel" name="label_48">
+            <property name="text">
+             <string>Empty</string>
+            </property>
+           </widget>
+          </item>
+          <item row="17" column="1">
+           <widget class="QSpinBox" name="ta11">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="18" column="0">
+           <widget class="QLabel" name="label_49">
+            <property name="text">
+             <string>Empty</string>
+            </property>
+           </widget>
+          </item>
+          <item row="18" column="1">
+           <widget class="QSpinBox" name="ta12">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="19" column="0">
+           <widget class="QLabel" name="label_50">
+            <property name="text">
+             <string>Empty</string>
+            </property>
+           </widget>
+          </item>
+          <item row="19" column="1">
+           <widget class="QSpinBox" name="ta13">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="20" column="0">
+           <widget class="QLabel" name="label_51">
+            <property name="text">
+             <string>Empty</string>
+            </property>
+           </widget>
+          </item>
+          <item row="20" column="1">
+           <widget class="QSpinBox" name="ta14">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item row="21" column="0">
+           <widget class="QLabel" name="label_52">
+            <property name="text">
+             <string>Empty</string>
+            </property>
+           </widget>
+          </item>
+          <item row="21" column="1">
+           <widget class="QSpinBox" name="ta15">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>-65535</number>
+            </property>
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <layout class="QFormLayout" name="formLayout_3">
-        <item row="1" column="0">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Heading</string>
-          </property>
-         </widget>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Visualization</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QGraphicsView" name="viewRoll"/>
+          </item>
+          <item>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="1" column="0">
+             <widget class="QSlider" name="aileronLeft">
+              <property name="minimum">
+               <number>-500</number>
+              </property>
+              <property name="maximum">
+               <number>500</number>
+              </property>
+              <property name="tracking">
+               <bool>true</bool>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="invertedAppearance">
+               <bool>false</bool>
+              </property>
+              <property name="invertedControls">
+               <bool>false</bool>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TicksAbove</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSlider" name="vtailLeft">
+              <property name="minimum">
+               <number>-500</number>
+              </property>
+              <property name="maximum">
+               <number>500</number>
+              </property>
+              <property name="tracking">
+               <bool>true</bool>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="invertedAppearance">
+               <bool>false</bool>
+              </property>
+              <property name="invertedControls">
+               <bool>false</bool>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TicksAbove</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3">
+             <widget class="QSlider" name="vtailRight">
+              <property name="minimum">
+               <number>-500</number>
+              </property>
+              <property name="maximum">
+               <number>500</number>
+              </property>
+              <property name="tracking">
+               <bool>true</bool>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="invertedAppearance">
+               <bool>false</bool>
+              </property>
+              <property name="invertedControls">
+               <bool>false</bool>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TicksAbove</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_58">
+              <property name="text">
+               <string>Ail-L</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QSlider" name="motor">
+              <property name="minimum">
+               <number>-500</number>
+              </property>
+              <property name="maximum">
+               <number>500</number>
+              </property>
+              <property name="value">
+               <number>-500</number>
+              </property>
+              <property name="tracking">
+               <bool>true</bool>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="invertedAppearance">
+               <bool>false</bool>
+              </property>
+              <property name="invertedControls">
+               <bool>false</bool>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TicksAbove</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="4">
+             <widget class="QSlider" name="aileronRight">
+              <property name="minimum">
+               <number>-500</number>
+              </property>
+              <property name="maximum">
+               <number>500</number>
+              </property>
+              <property name="tracking">
+               <bool>true</bool>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="invertedAppearance">
+               <bool>false</bool>
+              </property>
+              <property name="invertedControls">
+               <bool>false</bool>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TicksAbove</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="label_59">
+              <property name="text">
+               <string>VTl-L</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QLabel" name="label_60">
+              <property name="text">
+               <string>Motor</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QLabel" name="label_61">
+              <property name="text">
+               <string>VTl-R</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="4">
+             <widget class="QLabel" name="label_62">
+              <property name="text">
+               <string>Ail-R</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QGraphicsView" name="viewPitch"/>
+          </item>
+         </layout>
         </item>
-        <item row="1" column="1">
-         <widget class="QSpinBox" name="fc0">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Roll</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QSpinBox" name="fc1">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Pitch</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QSpinBox" name="fc2">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>Ultrasonic</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QSpinBox" name="fc3">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="label_5">
-          <property name="text">
-           <string>Barometer</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QSpinBox" name="fc4">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="0">
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>AIrspeed</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1">
-         <widget class="QSpinBox" name="fc5">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="0">
-         <widget class="QLabel" name="label_7">
-          <property name="text">
-           <string>Acc-Forw</string>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="1">
-         <widget class="QSpinBox" name="fc6">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="0">
-         <widget class="QLabel" name="label_8">
-          <property name="text">
-           <string>Acc-Sidw</string>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="1">
-         <widget class="QSpinBox" name="fc7">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="0">
-         <widget class="QLabel" name="label_9">
-          <property name="text">
-           <string>Acc-UpDown</string>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="1">
-         <widget class="QSpinBox" name="fc8">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="0">
-         <widget class="QLabel" name="label_10">
-          <property name="text">
-           <string>Empty</string>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="1">
-         <widget class="QSpinBox" name="fc9">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="11" column="0">
-         <widget class="QLabel" name="label_11">
-          <property name="text">
-           <string>Empty</string>
-          </property>
-         </widget>
-        </item>
-        <item row="11" column="1">
-         <widget class="QSpinBox" name="fc10">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="12" column="0">
-         <widget class="QLabel" name="label_12">
-          <property name="text">
-           <string>Aileron-Right</string>
-          </property>
-         </widget>
-        </item>
-        <item row="12" column="1">
-         <widget class="QSpinBox" name="fc11">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="13" column="0">
-         <widget class="QLabel" name="label_13">
-          <property name="text">
-           <string>VTail-Right</string>
-          </property>
-         </widget>
-        </item>
-        <item row="13" column="1">
-         <widget class="QSpinBox" name="fc12">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="14" column="0">
-         <widget class="QLabel" name="label_14">
-          <property name="text">
-           <string>Motor</string>
-          </property>
-         </widget>
-        </item>
-        <item row="14" column="1">
-         <widget class="QSpinBox" name="fc13">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="15" column="0">
-         <widget class="QLabel" name="label_15">
-          <property name="text">
-           <string>VTail-Left</string>
-          </property>
-         </widget>
-        </item>
-        <item row="15" column="1">
-         <widget class="QSpinBox" name="fc14">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="16" column="0">
-         <widget class="QLabel" name="label_16">
-          <property name="text">
-           <string>Aileron-Left</string>
-          </property>
-         </widget>
-        </item>
-        <item row="16" column="1">
-         <widget class="QSpinBox" name="fc15">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_55">
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>FlightController</string>
-          </property>
-         </widget>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <widget class="QSlider" name="joyLeftY">
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>200</height>
+             </size>
+            </property>
+            <property name="minimum">
+             <number>-127</number>
+            </property>
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="singleStep">
+             <number>0</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSlider" name="joyLeftX">
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>200</height>
+             </size>
+            </property>
+            <property name="minimum">
+             <number>-127</number>
+            </property>
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="singleStep">
+             <number>0</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGraphicsView" name="viewCompass">
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>200</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSlider" name="joyRightX">
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>200</height>
+             </size>
+            </property>
+            <property name="minimum">
+             <number>-127</number>
+            </property>
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="singleStep">
+             <number>0</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSlider" name="joyRightY">
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>200</height>
+             </size>
+            </property>
+            <property name="minimum">
+             <number>-127</number>
+            </property>
+            <property name="maximum">
+             <number>127</number>
+            </property>
+            <property name="singleStep">
+             <number>0</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_3">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <layout class="QFormLayout" name="formLayout_2">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_56">
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>FlightComputer</string>
-          </property>
-         </widget>
+      </widget>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Graphs</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QLabel" name="label_65">
+            <property name="text">
+             <string>Number of Samples to Show</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="spinBox">
+            <property name="minimum">
+             <number>5</number>
+            </property>
+            <property name="maximum">
+             <number>1000</number>
+            </property>
+            <property name="value">
+             <number>10</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_33">
-          <property name="text">
-           <string>Power</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QSpinBox" name="fcp0">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_34">
-          <property name="text">
-           <string>Pitch-Target</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QSpinBox" name="fcp1">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_35">
-          <property name="text">
-           <string>Roll-Target</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QSpinBox" name="fcp2">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_36">
-          <property name="text">
-           <string>Empty</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QSpinBox" name="fcp3">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="label_57">
-          <property name="font">
-           <font>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>Taranis</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="0">
-         <widget class="QLabel" name="label_37">
-          <property name="text">
-           <string>Throttle</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1">
-         <widget class="QSpinBox" name="ta0">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="0">
-         <widget class="QLabel" name="label_38">
-          <property name="text">
-           <string>AIleron-Left</string>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="1">
-         <widget class="QSpinBox" name="ta1">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="0">
-         <widget class="QLabel" name="label_39">
-          <property name="text">
-           <string>Aileron-Right</string>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="1">
-         <widget class="QSpinBox" name="ta2">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="0">
-         <widget class="QLabel" name="label_40">
-          <property name="text">
-           <string>VTail-Left</string>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="1">
-         <widget class="QSpinBox" name="ta3">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="0">
-         <widget class="QLabel" name="label_41">
-          <property name="text">
-           <string>VTail-Right</string>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="1">
-         <widget class="QSpinBox" name="ta4">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="11" column="0">
-         <widget class="QLabel" name="label_42">
-          <property name="text">
-           <string>Throttle</string>
-          </property>
-         </widget>
-        </item>
-        <item row="11" column="1">
-         <widget class="QSpinBox" name="ta5">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="12" column="0">
-         <widget class="QLabel" name="label_43">
-          <property name="text">
-           <string>Yaw</string>
-          </property>
-         </widget>
-        </item>
-        <item row="12" column="1">
-         <widget class="QSpinBox" name="ta6">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="13" column="0">
-         <widget class="QLabel" name="label_44">
-          <property name="text">
-           <string>Pitch</string>
-          </property>
-         </widget>
-        </item>
-        <item row="13" column="1">
-         <widget class="QSpinBox" name="ta7">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="14" column="0">
-         <widget class="QLabel" name="label_45">
-          <property name="text">
-           <string>Roll</string>
-          </property>
-         </widget>
-        </item>
-        <item row="14" column="1">
-         <widget class="QSpinBox" name="ta8">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="15" column="0">
-         <widget class="QLabel" name="label_46">
-          <property name="text">
-           <string>Arming</string>
-          </property>
-         </widget>
-        </item>
-        <item row="15" column="1">
-         <widget class="QSpinBox" name="ta9">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="16" column="0">
-         <widget class="QLabel" name="label_47">
-          <property name="text">
-           <string>Override</string>
-          </property>
-         </widget>
-        </item>
-        <item row="16" column="1">
-         <widget class="QSpinBox" name="ta10">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="17" column="0">
-         <widget class="QLabel" name="label_48">
-          <property name="text">
-           <string>Empty</string>
-          </property>
-         </widget>
-        </item>
-        <item row="17" column="1">
-         <widget class="QSpinBox" name="ta11">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="18" column="0">
-         <widget class="QLabel" name="label_49">
-          <property name="text">
-           <string>Empty</string>
-          </property>
-         </widget>
-        </item>
-        <item row="18" column="1">
-         <widget class="QSpinBox" name="ta12">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="19" column="0">
-         <widget class="QLabel" name="label_50">
-          <property name="text">
-           <string>Empty</string>
-          </property>
-         </widget>
-        </item>
-        <item row="19" column="1">
-         <widget class="QSpinBox" name="ta13">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="20" column="0">
-         <widget class="QLabel" name="label_51">
-          <property name="text">
-           <string>Empty</string>
-          </property>
-         </widget>
-        </item>
-        <item row="20" column="1">
-         <widget class="QSpinBox" name="ta14">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
-        </item>
-        <item row="21" column="0">
-         <widget class="QLabel" name="label_52">
-          <property name="text">
-           <string>Empty</string>
-          </property>
-         </widget>
-        </item>
-        <item row="21" column="1">
-         <widget class="QSpinBox" name="ta15">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-          <property name="minimum">
-           <number>-65535</number>
-          </property>
-          <property name="maximum">
-           <number>65535</number>
-          </property>
-         </widget>
+        <item>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_64">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Pitch</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_63">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Roll</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
-      </item>
-     </layout>
+      </widget>
+     </widget>
     </item>
     <item>
      <widget class="QTextBrowser" name="log"/>

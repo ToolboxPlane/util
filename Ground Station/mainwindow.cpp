@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include "rcLib.hpp"
+#include "plot.h"
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -9,6 +10,37 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    sceneRoll = new QGraphicsScene(this);
+    scenePitch = new QGraphicsScene(this);
+    sceneCompass = new QGraphicsScene(this);
+
+    ui->viewRoll->setScene(sceneRoll);
+    ui->viewPitch->setScene(scenePitch);
+    ui->viewCompass->setScene(sceneCompass);
+
+    sceneRoll->setBackgroundBrush(QBrush(Qt::blue));
+    scenePitch->setBackgroundBrush(QBrush(Qt::blue));
+    sceneCompass->setBackgroundBrush(QBrush(Qt::blue));
+
+    sceneRoll->addRect(0, 0, 130, 3, QPen(Qt::black), QBrush(Qt::white));
+    sceneRoll->addRect(55, 0, 20, 20, QPen(Qt::black), QBrush(Qt::white));
+
+    scenePitch->addRect(0, 0, 100, 20, QPen(Qt::black), QBrush(Qt::white));
+    scenePitch->addRect(0,-20,20,20, QPen(Qt::black), QBrush(Qt::white));
+
+    sceneCompass->addRect(-5,-50,10,100, QPen(Qt::black), QBrush(Qt::red));
+    sceneCompass->addRect(-5,50,10,100, QPen(Qt::black), QBrush(Qt::white));
+
+    rollPlot = new Plot();
+    pitchPlot = new Plot();
+
+    ui->gridLayout->addWidget(rollPlot, 1,0);
+    ui->gridLayout->addWidget(pitchPlot, 1, 1);
+
+    ui->viewRoll->rotate(20);
+    ui->viewPitch->rotate(-20);
+    ui->viewCompass->rotate(45);
 }
 
 MainWindow::~MainWindow()
@@ -47,6 +79,12 @@ void MainWindow::serialRead()
                     ui->lora5->setValue(pkgInNew.getChannel(5));
                     ui->lora6->setValue(pkgInNew.getChannel(6));
                     ui->lora7->setValue(pkgInNew.getChannel(7));
+
+                    ui->joyRightX->setValue(pkgInNew.getChannel(0)-127);
+                    ui->joyRightY->setValue(pkgInNew.getChannel(1)-127);
+                    ui->joyLeftX->setValue(pkgInNew.getChannel(2)-127);
+                    ui->joyLeftY->setValue(pkgInNew.getChannel(3)-127);
+
                 break;
                 case 23: // flight-controller
                     ui->log->append("New Package from Flight-Controller");
@@ -66,6 +104,18 @@ void MainWindow::serialRead()
                     ui->fc13->setValue(pkgInNew.getChannel(13)-500);
                     ui->fc14->setValue(pkgInNew.getChannel(14)-500);
                     ui->fc15->setValue(pkgInNew.getChannel(15)-500);
+
+                    ui->viewCompass->rotate(pkgInNew.getChannel(0));
+                    ui->viewRoll->rotate(pkgInNew.getChannel(1)-180);
+                    ui->viewPitch->rotate(pkgInNew.getChannel(2)-180);
+                    ui->aileronRight->setValue(pkgInNew.getChannel(11)-500);
+                    ui->vtailRight->setValue(pkgInNew.getChannel(12)-500);
+                    ui->motor->setValue(pkgInNew.getChannel(13)-500);
+                    ui->vtailLeft->setValue(pkgInNew.getChannel(14)-500);
+                    ui->aileronLeft->setValue(pkgInNew.getChannel(15)-500);
+
+                    rollPlot->addValue(pkgInNew.getChannel(1), 0);
+                    pitchPlot->addValue(pkgInNew.getChannel(2), 0);
                 break;
                 case 38: // Flight-Computer
                     ui->log->append("New Package from Flight-Computer");
@@ -110,4 +160,10 @@ void MainWindow::serialRead()
             }
         }
     }
+}
+
+void MainWindow::on_spinBox_valueChanged(int arg1)
+{
+    pitchPlot->setXSteps(arg1);
+    rollPlot->setXSteps(arg1);
 }
