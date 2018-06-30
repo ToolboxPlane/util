@@ -16,10 +16,12 @@ CONFIG += c++14
 SOURCES += main.cpp\
         mainwindow.cpp \
     rcLib.cpp \
-    plot.cpp
+    plot.cpp \
+    csvreaderthread.cpp
 
 HEADERS  += mainwindow.h \
     rcLib.hpp \
-    plot.h
+    plot.h \
+    csvreaderthread.h
 
 FORMS    += mainwindow.ui
