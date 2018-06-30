@@ -6,18 +6,30 @@ import (
 	"io/ioutil"
 	"log"
 	"strconv"
+	"strings"
 )
+
+var inputFile string
+var outputFile string
+var transmitterId int64
+var channelIndex int
+var resolutionFilter int64
+var separateTransmitterIds bool
 
 func main() {
 
-	inputFile := flag.String("in", "log.json", "Log file in JSON format.")
-	outputFile := flag.String("out", "log.csv", "Output file name")
-	transmitterId := flag.Int64("tId", -1, "Optional Transmitter ID. All transmitters if -1.")
-	channelIndex := flag.Int("c", -1, "Optional Channel Index. All channels if -1.")
-	resolutionFilter := flag.Int64("r", -1, "Optional Resolution. All resolutions if -1.")
+	flag.StringVar(&inputFile, "in", "log.json", "Log file in JSON format.")
+	flag.StringVar(&outputFile, "out", "log.csv", "Output file name")
+	flag.Int64Var(&transmitterId, "tId", -1, "Optional Transmitter ID. All transmitters if -1.")
+	flag.IntVar(&channelIndex, "c", -1, "Optional Channel Index. All channels if -1.")
+	flag.Int64Var(&resolutionFilter, "r", -1, "Optional Resolution. All resolutions if -1.")
+	flag.BoolVar(&separateTransmitterIds, "sep", false, "Set to create multiple files containing one tId each.")
+
 	flag.Parse()
 
-	b, err := ioutil.ReadFile(*inputFile)
+	outputFile = strings.TrimSuffix(outputFile, ".csv")
+
+	b, err := ioutil.ReadFile(inputFile)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -28,17 +40,54 @@ func main() {
 		log.Fatal(err)
 	}
 
-	var csvData []byte
+	if separateTransmitterIds {
+		writeMultipleCSV(flightLog)
+	} else {
+		writeSingleCSV(flightLog)
+	}
+
+}
+
+func writeMultipleCSV(flightLog Log) {
+	csvData := make(map[int64][]byte)
 	for _, p := range flightLog.Recording {
-		if *transmitterId == -1 || p.Data.Header.TransmitterID == *transmitterId {
-			if *resolutionFilter == -1 || p.Data.Header.Resolution == *resolutionFilter {
+		if transmitterId == -1 || p.Data.Header.TransmitterID == transmitterId {
+			if resolutionFilter == -1 || p.Data.Header.Resolution == resolutionFilter {
 
 				var data string
 				var cMax int
-				if *channelIndex == -1 {
+				if channelIndex == -1 {
 					cMax = len(p.Data.Channels)
 				} else {
-					cMax = *channelIndex
+					cMax = channelIndex
+				}
+				for c := 0; c < cMax; c++ {
+					data += strconv.FormatInt(p.Data.Channels[c], 10) + ";"
+				}
+				csvData[p.Data.Header.TransmitterID] = append(csvData[p.Data.Header.TransmitterID], []byte(strconv.FormatInt(p.Timestamp, 10)+";"+strconv.FormatInt(p.Data.Header.TransmitterID, 10)+";"+data[0:len(data)-1]+"\n")...)
+			}
+		}
+	}
+	for tid, data := range csvData {
+		err := ioutil.WriteFile(outputFile+"_"+strconv.FormatInt(tid, 10)+".csv", data, 0666)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+}
+
+func writeSingleCSV(flightLog Log) {
+	var csvData []byte
+	for _, p := range flightLog.Recording {
+		if transmitterId == -1 || p.Data.Header.TransmitterID == transmitterId {
+			if resolutionFilter == -1 || p.Data.Header.Resolution == resolutionFilter {
+
+				var data string
+				var cMax int
+				if channelIndex == -1 {
+					cMax = len(p.Data.Channels)
+				} else {
+					cMax = channelIndex
 				}
 				for c := 0; c < cMax; c++ {
 					data += strconv.FormatInt(p.Data.Channels[c], 10) + ";"
@@ -47,7 +96,7 @@ func main() {
 			}
 		}
 	}
-	err = ioutil.WriteFile(*outputFile, csvData, 0666)
+	err := ioutil.WriteFile(outputFile, csvData, 0666)
 	if err != nil {
 		log.Fatal(err)
 	}
