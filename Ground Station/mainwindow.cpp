@@ -2,12 +2,6 @@
 #include "ui_mainwindow.h"
 
 #include <QDebug>
-#include <QFileDialog>
-#include <QFile>
-#include <QDateTime>
-#include <QThread>
-#include <QStringList>
-#include "csvreaderthread.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -49,45 +43,29 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    csvThread->quit();
-    csvThread->wait();
     delete ui;
 }
 
 void MainWindow::on_connectButton_clicked()
 {
-    serial = new QSerialPort(ui->portEdit->text());
-    serial->setBaudRate(ui->baudSpin->value());
-
-    if(!serial->open(QSerialPort::ReadWrite)) {
-        ui->log->append("Could not open serial port!");
-    } else {
-        connect(serial, SIGNAL(readyRead()), this, SLOT(serialRead()));
-        ui->log->append("Connected!");
+    socket = new QTcpSocket(this);
+    connect(socket, SIGNAL(readyRead()), SLOT(tcpRead()));
+    socket->connectToHost(ui->ipAddress->text(), ui->port->value());
+    if(socket->waitForConnected()) {
+        ui->log->append("Connected");
     }
 }
 
-void MainWindow::serialRead()
+void MainWindow::tcpRead()
 {
     static rcLib::Package pkgInNew;
-    QByteArray data = serial->readAll();
+    QByteArray data = socket->readAll();
 
     for(int c=0; c<data.length(); c++){
         if(pkgInNew.decode(data[c])){
             handlePackage(pkgInNew);
         }
     }
-}
-
-void MainWindow::forwardResult(QStringList items)
-{
-    long time = items.at(0).toLong();
-    int transmitterId = items.at(1).toInt();
-    rcLib::Package newPackage;
-    for(int c=2; c<items.length(); c++) {
-        newPackage.setChannel(c-2, items.at(c).toInt());
-    }
-    handlePackage(newPackage, transmitterId);
 }
 
 void MainWindow::handlePackage(rcLib::Package pkgInNew, int transmitterId)
@@ -195,17 +173,4 @@ void MainWindow::on_spinBox_valueChanged(int arg1)
 {
     pitchPlot->setXSteps(arg1);
     rollPlot->setXSteps(arg1);
-}
-
-void MainWindow::on_buttonOpenFile_clicked()
-{
-    QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Open Recording"), "", tr("Recordings (*.csv)"));
-    recordingFile = new QFile(fileName);
-    if(recordingFile->open(QIODevice::ReadOnly)) {
-        ui->log->append("File succesfully opened!");
-        csvThread = new CsvReaderThread(recordingFile);
-        connect(csvThread, &CsvReaderThread::sampleReady, this, &MainWindow::forwardResult);
-        csvThread->start();
-    }
 }

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>752</width>
-    <height>797</height>
+    <height>828</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,19 +21,22 @@
        <enum>QLayout::SetDefaultConstraint</enum>
       </property>
       <item>
-       <widget class="QLineEdit" name="portEdit">
+       <widget class="QLineEdit" name="ipAddress">
         <property name="text">
-         <string>/dev/ttyACM0</string>
+         <string>127.0.0.1</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QSpinBox" name="baudSpin">
+       <widget class="QSpinBox" name="port">
+        <property name="minimum">
+         <number>1000</number>
+        </property>
         <property name="maximum">
-         <number>1000000</number>
+         <number>65535</number>
         </property>
         <property name="value">
-         <number>9600</number>
+         <number>61888</number>
         </property>
        </widget>
       </item>
@@ -54,85 +57,6 @@
        <widget class="QPushButton" name="connectButton">
         <property name="text">
          <string>Connect</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_7">
-      <item>
-       <widget class="QPushButton" name="pushButton_2">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>22</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>&lt;</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_3">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>48</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Play</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_4">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>22</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QSpinBox" name="spinBox_2">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_5">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="buttonOpenFile">
-        <property name="text">
-         <string>Open File</string>
         </property>
        </widget>
       </item>

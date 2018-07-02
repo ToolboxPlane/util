@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui serialport
+QT       += core gui serialport network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -16,12 +16,10 @@ CONFIG += c++14
 SOURCES += main.cpp\
         mainwindow.cpp \
     rcLib.cpp \
-    plot.cpp \
-    csvreaderthread.cpp
+    plot.cpp
 
 HEADERS  += mainwindow.h \
     rcLib.hpp \
-    plot.h \
-    csvreaderthread.h
+    plot.h
 
 FORMS    += mainwindow.ui
