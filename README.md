@@ -10,4 +10,4 @@ Show the all channels by one transmitter in a simple ui
 Generate a csv file to provide as a mission for the FlightComputer.
 
 ## Ground Station
-Show the information contained in all received rcLib-Packages
+Show the information contained in all received rcLib-Packages, receives the information via TCP from a running FlightComputer instance
