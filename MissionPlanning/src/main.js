@@ -173,7 +173,7 @@ let planning = {
     save: function (filename) {
         let text = "0\nTimestamp; Lat; Lon; Altitude; MaxDelta; LandingAllowed";
         for(let c=0; c<this.waypoints.length; c++) {
-            text += "\n 0; " + this.waypoints[c].lat + "; " + this.waypoints[c].lon + "; " + this.waypoints[c].altitude
+            text += "\n0; " + this.waypoints[c].lat + "; " + this.waypoints[c].lon + "; " + this.waypoints[c].altitude
              + "; " + this.waypoints[c].maxDelta + "; " + (this.waypoints[c].landingAllowed ? "1" : "0");
         }
 

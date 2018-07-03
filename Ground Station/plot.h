@@ -19,7 +19,9 @@ protected:
 private:
     int yToPlot(double y);
 
-    int xSteps = 10;
+    int xSteps = 100;
+    int yNumbers = 10;
+    int xNumbers = 10;
     int currT = 0;
     double min, max = 0;
     QVector<QVector<double> > data;

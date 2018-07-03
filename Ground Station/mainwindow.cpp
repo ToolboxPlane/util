@@ -123,8 +123,8 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew, int transmitterId)
             ui->vtailLeft->setValue(pkgInNew.getChannel(14)-500);
             ui->aileronLeft->setValue(pkgInNew.getChannel(15)-500);
 
-            rollPlot->addValue(pkgInNew.getChannel(1), 0);
-            pitchPlot->addValue(pkgInNew.getChannel(2), 0);
+            rollPlot->addValue(pkgInNew.getChannel(1)-180, 0);
+            pitchPlot->addValue(pkgInNew.getChannel(2)-180, 0);
         break;
         case 38: // Flight-Computer
             ui->log->append("New Package from Flight-Computer");

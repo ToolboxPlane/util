@@ -51,6 +51,11 @@ void Plot::paintEvent(QPaintEvent *event)
     painter.drawLine(0, xAxisPos, size.width(), xAxisPos);
     painter.drawLine(0, 0, 0, size.height());
 
+    double step = (this->max - this->min) / xNumbers;
+    for(int c = 0; c < xNumbers; c++) {
+        painter.drawText(0, yToPlot(step * c + min), QString::number(c*step+min));
+    }
+
     for(int c = 1; c <= xSteps; c++) {
         int x = c * size.width() / xSteps;
         painter.drawLine(x, xAxisPos+3, x, xAxisPos-3);
