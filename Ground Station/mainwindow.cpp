@@ -103,7 +103,7 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew, int transmitterId)
             ui->fc7->setValue(pkgInNew.getChannel(7)-500);
             ui->fc8->setValue(pkgInNew.getChannel(8)-500);
             ui->fc9->setValue(pkgInNew.getChannel(9));
-            ui->fc0->setValue(pkgInNew.getChannel(10));
+            ui->fc10->setValue(pkgInNew.getChannel(10));
             ui->fc11->setValue(pkgInNew.getChannel(11)-500);
             ui->fc12->setValue(pkgInNew.getChannel(12)-500);
             ui->fc13->setValue(pkgInNew.getChannel(13)-500);
@@ -132,6 +132,10 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew, int transmitterId)
             ui->fcp1->setValue(pkgInNew.getChannel(1)-180);
             ui->fcp2->setValue(pkgInNew.getChannel(2)-180);
             ui->fcp3->setValue(pkgInNew.getChannel(3));
+            ui->fcp4->setValue(pkgInNew.getChannel(4));
+            ui->fcp5->setValue(pkgInNew.getChannel(5));
+            ui->fcp6->setValue(pkgInNew.getChannel(6));
+            ui->fcp7->setValue(pkgInNew.getChannel(7));
             break;
         case 56: // Taranis
             ui->log->append("New Package from Taranis");
@@ -145,7 +149,7 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew, int transmitterId)
             ui->ta7->setValue(pkgInNew.getChannel(7));
             ui->ta8->setValue(pkgInNew.getChannel(8));
             ui->ta9->setValue(pkgInNew.getChannel(9));
-            ui->ta0->setValue(pkgInNew.getChannel(10));
+            ui->ta10->setValue(pkgInNew.getChannel(10));
             ui->ta11->setValue(pkgInNew.getChannel(11));
             ui->ta12->setValue(pkgInNew.getChannel(12));
             ui->ta13->setValue(pkgInNew.getChannel(13));
