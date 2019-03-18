@@ -4,8 +4,7 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QGraphicsView>
-#include <QGraphicsItem>
-#include <QTcpSocket>
+#include <QTimer>
 
 #include "plot.h"
 #include "rcLib.hpp"
@@ -28,14 +27,16 @@ private slots:
     void on_spinBox_valueChanged(int arg1);
 
 protected slots:
-    void tcpRead();
+    void readSocket();
 
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *sceneRoll, *scenePitch, *sceneCompass;
     Plot *rollPlot, *pitchPlot;
-    QTcpSocket *socket;
+    QTimer *timer{nullptr};
+    uint8_t buf[512];
     void handlePackage(rcLib::Package pkgInNew, int transmitterId = -1);
+    int fd{0};
 };
 
 #endif // MAINWINDOW_H

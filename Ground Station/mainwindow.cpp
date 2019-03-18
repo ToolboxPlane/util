@@ -1,6 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netinet/ip.h>
+#include <sys/socket.h>
+
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -39,31 +44,45 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->viewRoll->rotate(20);
     ui->viewPitch->rotate(-20);
     ui->viewCompass->rotate(45);
+
+
 }
 
 MainWindow::~MainWindow()
 {
+    delete sceneRoll;
+    delete scenePitch;
+    delete sceneCompass;
+    delete timer;
+    delete rollPlot;
+    delete pitchPlot;
     delete ui;
 }
 
-void MainWindow::on_connectButton_clicked()
-{
-    socket = new QTcpSocket(this);
-    connect(socket, SIGNAL(readyRead()), SLOT(tcpRead()));
-    socket->connectToHost(ui->ipAddress->text(), ui->port->value());
-    if(socket->waitForConnected()) {
-        ui->log->append("Connected");
+void MainWindow::on_connectButton_clicked() {
+    fd = socket(AF_INET, SOCK_RAW | SOCK_NONBLOCK, 253);
+    if (fd < 0) {
+        qDebug() << strerror(errno);
+    }
+    if (!timer) {
+        timer = new QTimer();
+        connect(timer, SIGNAL(timeout()), this, SLOT(readSocket()));
+        timer->start(20);
     }
 }
 
-void MainWindow::tcpRead()
+void MainWindow::readSocket()
 {
     static rcLib::Package pkgInNew;
-    QByteArray data = socket->readAll();
-
-    for(int c=0; c<data.length(); c++){
-        if(pkgInNew.decode(data[c])){
-            handlePackage(pkgInNew);
+    auto readed = recv(this->fd, this->buf, 512, 0);
+    if (readed > 0) {
+        qDebug() << readed;
+        auto *ip_packet = reinterpret_cast<iphdr*>(this->buf);
+        for (auto c = ip_packet->ihl*4; c < readed; c++) {
+            qDebug() << this->buf;
+            if (pkgInNew.decode(this->buf[c])) {
+                this->handlePackage(pkgInNew);
+            }
         }
     }
 }
