@@ -76,10 +76,8 @@ void MainWindow::readSocket()
     static rcLib::Package pkgInNew;
     auto readed = recv(this->fd, this->buf, 512, 0);
     if (readed > 0) {
-        qDebug() << readed;
         auto *ip_packet = reinterpret_cast<iphdr*>(this->buf);
         for (auto c = ip_packet->ihl*4; c < readed; c++) {
-            qDebug() << this->buf;
             if (pkgInNew.decode(this->buf[c])) {
                 this->handlePackage(pkgInNew);
             }
