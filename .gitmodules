@@ -1,0 +1,3 @@
+[submodule "CalibratePf/RadioControlProtocolC"]
+	path = CalibratePf/RadioControlProtocolC
+	url = git@github.com:ToolboxPlane/RadioControlProtocolC.git
