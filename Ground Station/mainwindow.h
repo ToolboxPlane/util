@@ -7,7 +7,7 @@
 #include <QTimer>
 
 #include "plot.h"
-#include "rcLib.hpp"
+#include "RadioControlProtocolCpp/rcLib.hpp"
 
 namespace Ui {
 class MainWindow;
@@ -22,8 +22,6 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_connectButton_clicked();
-
     void on_spinBox_valueChanged(int arg1);
 
 protected slots:

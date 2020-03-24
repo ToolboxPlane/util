@@ -2,3 +2,4 @@ mission.csv
 node_modules
 .idea
 src/config.js
+package-lock.json

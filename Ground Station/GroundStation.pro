@@ -15,11 +15,13 @@ CONFIG += c++14
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    rcLib.cpp \
-    plot.cpp
+    plot.cpp \
+    RadioControlProtocolCpp/rcLib.cpp \
+    RadioControlProtocolCpp/RadioControlProtocolC/rc_lib.c
 
 HEADERS  += mainwindow.h \
-    rcLib.hpp \
-    plot.h
+    plot.h \
+    RadioControlProtocolCpp/RadioControlProtocolC/rc_lib.h \
+    RadioControlProtocolCpp/rcLib.hpp
 
 FORMS    += mainwindow.ui

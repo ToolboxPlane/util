@@ -45,21 +45,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->viewPitch->rotate(-20);
     ui->viewCompass->rotate(45);
 
-
-}
-
-MainWindow::~MainWindow()
-{
-    delete sceneRoll;
-    delete scenePitch;
-    delete sceneCompass;
-    delete timer;
-    delete rollPlot;
-    delete pitchPlot;
-    delete ui;
-}
-
-void MainWindow::on_connectButton_clicked() {
     fd = socket(AF_INET, SOCK_RAW | SOCK_NONBLOCK, 253);
     if (fd < 0) {
         qDebug() << strerror(errno);
@@ -69,6 +54,15 @@ void MainWindow::on_connectButton_clicked() {
         connect(timer, SIGNAL(timeout()), this, SLOT(readSocket()));
         timer->start(20);
     }
+}
+
+MainWindow::~MainWindow()
+{
+    delete sceneRoll;
+    delete scenePitch;
+    delete sceneCompass;
+    delete timer;
+    delete rollPlot;
 }
 
 void MainWindow::readSocket()
