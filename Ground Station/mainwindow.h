@@ -18,7 +18,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
@@ -33,7 +33,7 @@ private:
     Plot *rollPlot, *pitchPlot;
     QTimer *timer{nullptr};
     uint8_t buf[512];
-    void handlePackage(rcLib::Package pkgInNew, int transmitterId = -1);
+    void handlePackage(rcLib::Package pkgInNew);
     int fd{0};
 };
 

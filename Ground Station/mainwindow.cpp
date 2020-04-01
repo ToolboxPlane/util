@@ -22,15 +22,33 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->viewPitch->setScene(scenePitch);
     ui->viewCompass->setScene(sceneCompass);
 
-    sceneRoll->setBackgroundBrush(QBrush(Qt::blue));
-    scenePitch->setBackgroundBrush(QBrush(Qt::blue));
-    sceneCompass->setBackgroundBrush(QBrush(Qt::blue));
+    sceneRoll->setBackgroundBrush(QBrush(Qt::white));
+    scenePitch->setBackgroundBrush(QBrush(Qt::white));
+    sceneCompass->setBackgroundBrush(QBrush(Qt::white));
 
-    sceneRoll->addRect(0, 0, 130, 3, QPen(Qt::black), QBrush(Qt::white));
-    sceneRoll->addRect(55, 0, 20, 20, QPen(Qt::black), QBrush(Qt::white));
+    sceneRoll->addEllipse(80, -8, 40, 16, QPen(Qt::black), QBrush(Qt::lightGray));
+    sceneRoll->addRect(0, 0, 200, 5, QPen(Qt::black), QBrush(Qt::lightGray));
+    sceneRoll->addRect(66, 0, 5, -20, QPen(Qt::black), QBrush(Qt::lightGray));
+    sceneRoll->addRect(200-(66+5), 0, 5, -20, QPen(Qt::black), QBrush(Qt::lightGray));
 
-    scenePitch->addRect(0, 0, 100, 20, QPen(Qt::black), QBrush(Qt::white));
-    scenePitch->addRect(0,-20,20,20, QPen(Qt::black), QBrush(Qt::white));
+    sceneRoll->addLine(100,0, 100+50, 0, QPen(Qt::green, 4));
+    sceneRoll->addLine(100,0, 100, 50, QPen(Qt::blue, 4));
+    sceneRoll->addLine(100-3,-3,100+3,3, QPen(Qt::red, 4));
+    sceneRoll->addLine(100-3,3,100+3,-3, QPen(Qt::red, 4));
+
+    ui->viewRoll->scale(2, 2);
+
+    scenePitch->addEllipse(0, 0, 70, 16, QPen(Qt::black), QBrush(Qt::lightGray));
+    scenePitch->addRect(75,-10,-30,20, QPen(Qt::black), QBrush(Qt::lightGray));
+    scenePitch->addRect(0,5,80,5, QPen(Qt::black), QBrush(Qt::lightGray));
+
+    ui->viewPitch->scale(2, 2);
+
+
+    scenePitch->addLine(40, 7.5, 40-50, 7.5, QPen(Qt::red, 4));
+    scenePitch->addLine(40, 7.5, 40, 7.5+50, QPen(Qt::blue, 4));
+    scenePitch->addLine(40-3, 7.5-3, 40+3, 7.5+3, QPen(Qt::green, 4));
+    scenePitch->addLine(40-3, 7.5+3, 40+3, 7.5-3, QPen(Qt::green, 4));
 
     sceneCompass->addRect(-5,-50,10,100, QPen(Qt::black), QBrush(Qt::red));
     sceneCompass->addRect(-5,50,10,100, QPen(Qt::black), QBrush(Qt::white));
@@ -48,6 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
     fd = socket(AF_INET, SOCK_RAW | SOCK_NONBLOCK, 253);
     if (fd < 0) {
         qDebug() << strerror(errno);
+        ui->log->append(QString("Error establishing connection: ") + QString(strerror(errno)));
     }
     if (!timer) {
         timer = new QTimer();
@@ -79,11 +98,9 @@ void MainWindow::readSocket()
     }
 }
 
-void MainWindow::handlePackage(rcLib::Package pkgInNew, int transmitterId)
+void MainWindow::handlePackage(rcLib::Package pkgInNew)
 {
-    if(transmitterId == -1) {
-        transmitterId = pkgInNew.getDeviceId();
-    }
+    int transmitterId = pkgInNew.getDeviceId();
     switch (transmitterId) {
         case 17: // lora-remote
             ui->log->append("New Package from LoRa-Remote");
@@ -94,7 +111,7 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew, int transmitterId)
             ui->lora4->setValue(pkgInNew.getChannel(4));
             ui->lora5->setValue(pkgInNew.getChannel(5));
             ui->lora6->setValue(pkgInNew.getChannel(6));
-            ui->lora7->setValue(pkgInNew.getChannel(7));
+            ui->lora7->setValue(-pkgInNew.getChannel(7));
 
             ui->joyRightX->setValue(pkgInNew.getChannel(0)-127);
             ui->joyRightY->setValue(pkgInNew.getChannel(1)-127);
@@ -102,22 +119,22 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew, int transmitterId)
             ui->joyLeftY->setValue(pkgInNew.getChannel(3)-127);
 
         break;
-        case 23: // flight-controller
+        case 23: // Flight-Controller
             ui->log->append("New Package from Flight-Controller");
             ui->fc0->setValue(pkgInNew.getChannel(0));
-            ui->fc1->setValue(pkgInNew.getChannel(1)-180);
-            ui->fc2->setValue(pkgInNew.getChannel(2)-180);
-            ui->fc3->setValue(pkgInNew.getChannel(3));
-            ui->fc4->setValue(pkgInNew.getChannel(4));
-            ui->fc5->setValue(pkgInNew.getChannel(5));
+            ui->fc1->setValue((pkgInNew.getChannel(1) - 500) / 2.0);
+            ui->fc2->setValue((pkgInNew.getChannel(2) - 500) / 2.0);
+            ui->fc3->setValue((pkgInNew.getChannel(3) - 500) / 2.0);
+            ui->fc4->setValue(pkgInNew.getChannel(4) - 500);
+            ui->fc5->setValue(pkgInNew.getChannel(5) - 500);
             ui->fc6->setValue(pkgInNew.getChannel(6)-500);
             ui->fc7->setValue(pkgInNew.getChannel(7)-500);
             ui->fc8->setValue(pkgInNew.getChannel(8)-500);
-            ui->fc9->setValue(pkgInNew.getChannel(9));
+            ui->fc9->setValue(pkgInNew.getChannel(9) - 500);
             ui->fc10->setValue(pkgInNew.getChannel(10));
-            ui->fc11->setValue(pkgInNew.getChannel(11)-500);
-            ui->fc12->setValue(pkgInNew.getChannel(12)-500);
-            ui->fc13->setValue(pkgInNew.getChannel(13)-500);
+            ui->fc11->setValue(pkgInNew.getChannel(11));
+            ui->fc12->setValue(pkgInNew.getChannel(12));
+            ui->fc13->setValue(pkgInNew.getChannel(13));
             ui->fc14->setValue(pkgInNew.getChannel(14)-500);
             ui->fc15->setValue(pkgInNew.getChannel(15)-500);
 
@@ -125,28 +142,28 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew, int transmitterId)
             ui->viewPitch->resetTransform();
             ui->viewRoll->resetTransform();
             ui->viewCompass->resetTransform();
-            ui->viewCompass->rotate(pkgInNew.getChannel(0));
-            ui->viewRoll->rotate(pkgInNew.getChannel(1)-180);
-            ui->viewPitch->rotate(pkgInNew.getChannel(2)-180);
-            ui->aileronRight->setValue(pkgInNew.getChannel(11)-500);
-            ui->vtailRight->setValue(pkgInNew.getChannel(12)-500);
-            ui->motor->setValue(pkgInNew.getChannel(13)-500);
-            ui->vtailLeft->setValue(pkgInNew.getChannel(14)-500);
-            ui->aileronLeft->setValue(pkgInNew.getChannel(15)-500);
+            ui->viewCompass->rotate((pkgInNew.getChannel(3)-500)/2.0);
+            ui->viewRoll->rotate((pkgInNew.getChannel(1)-500)/2.0);
+            ui->viewPitch->rotate((pkgInNew.getChannel(2)-500)/2.0);
+            ui->viewRoll->scale(2, 2);
+            ui->viewPitch->scale(2, 2);
+            ui->viewCompass->scale(0.9, 0.9);
 
-            rollPlot->addValue(pkgInNew.getChannel(1)-180, 0);
-            pitchPlot->addValue(pkgInNew.getChannel(2)-180, 0);
+
+
+            ui->motor->setValue(pkgInNew.getChannel(13));
+            ui->vtailLeft->setValue(pkgInNew.getChannel(14)-500);
+            ui->vtailRight->setValue(pkgInNew.getChannel(15)-500);
+
+            rollPlot->addValue((pkgInNew.getChannel(1)-500)/2.0, 0);
+            pitchPlot->addValue((pkgInNew.getChannel(2)-500)/2.0, 0);
         break;
         case 38: // Flight-Computer
             ui->log->append("New Package from Flight-Computer");
-            ui->fcp0->setValue(pkgInNew.getChannel(0));
-            ui->fcp1->setValue(pkgInNew.getChannel(1)-180);
-            ui->fcp2->setValue(pkgInNew.getChannel(2)-180);
-            ui->fcp3->setValue(pkgInNew.getChannel(3));
-            ui->fcp4->setValue(pkgInNew.getChannel(4));
-            ui->fcp5->setValue(pkgInNew.getChannel(5));
-            ui->fcp6->setValue(pkgInNew.getChannel(6));
-            ui->fcp7->setValue(pkgInNew.getChannel(7));
+            ui->fcp0->setValue(-pkgInNew.getChannel(0));
+            ui->fcp1->setValue(pkgInNew.getChannel(1));
+            ui->fcp2->setValue(pkgInNew.getChannel(2)/ 10.0);
+            ui->fcp3->setValue(pkgInNew.getChannel(3) / 10.0);
             break;
         case 56: // Taranis
             ui->log->append("New Package from Taranis");
@@ -170,13 +187,20 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew, int transmitterId)
         case 74: // PDB
             ui->log->append("New Package from PDB");
             ui->pdb0->setValue(pkgInNew.getChannel(0));
-            ui->pdb1->setValue(pkgInNew.getChannel(1)*128);
-            ui->pdb2->setValue(pkgInNew.getChannel(2)*256);
-            ui->pdb3->setValue(pkgInNew.getChannel(3)*32);
-            ui->pdb4->setValue(pkgInNew.getChannel(4)*64);
+            ui->pdb1->setValue((pkgInNew.getChannel(1)*128) / 1000.0);
+            ui->pdb2->setValue((pkgInNew.getChannel(2)*256) / 1000.0);
+            ui->pdb3->setValue((pkgInNew.getChannel(3)*32) / 1000.0);
+            ui->pdb4->setValue((pkgInNew.getChannel(4)*64) / 1000.0);
             ui->pdb5->setValue(pkgInNew.getChannel(5));
             ui->pdb6->setValue(pkgInNew.getChannel(6));
             ui->pdb7->setValue(pkgInNew.getChannel(7));
+            break;
+        case 91: // Nav-Board
+            ui->log->append("New Package from Nav");
+            ui->nav0->setValue(-pkgInNew.getChannel(0));
+            ui->nav1->setValue(pkgInNew.getChannel(1));
+            ui->nav2->setValue(pkgInNew.getChannel(2));
+            ui->nav3->setValue(pkgInNew.getChannel(3) / 100.0);
             break;
         default:
             ui->log->append("Package from unknown transmitter with ID: " + QString::number(pkgInNew.getDeviceId()));
