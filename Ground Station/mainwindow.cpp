@@ -55,9 +55,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     rollPlot = new Plot();
     pitchPlot = new Plot();
+    yawPlot = new Plot();
 
     ui->gridLayout->addWidget(rollPlot, 1,0);
     ui->gridLayout->addWidget(pitchPlot, 1, 1);
+    ui->gridLayout->addWidget(yawPlot, 1, 2);
 
     ui->viewRoll->rotate(20);
     ui->viewPitch->rotate(-20);
@@ -67,11 +69,13 @@ MainWindow::MainWindow(QWidget *parent) :
     if (fd < 0) {
         qDebug() << strerror(errno);
         ui->log->append(QString("Error establishing connection: ") + QString(strerror(errno)));
-    }
-    if (!timer) {
-        timer = new QTimer();
-        connect(timer, SIGNAL(timeout()), this, SLOT(readSocket()));
-        timer->start(20);
+
+    } else {
+        if (!timer) {
+            timer = new QTimer();
+            connect(timer, SIGNAL(timeout()), this, SLOT(readSocket()));
+            timer->start(20);
+        }
     }
 }
 
@@ -87,7 +91,7 @@ MainWindow::~MainWindow()
 void MainWindow::readSocket()
 {
     static rcLib::Package pkgInNew;
-    auto readed = recv(this->fd, this->buf, 512, 0);
+    auto readed = recv(this->fd, this->buf, BUF_SIZE, 0);
     if (readed > 0) {
         auto *ip_packet = reinterpret_cast<iphdr*>(this->buf);
         for (auto c = ip_packet->ihl*4; c < readed; c++) {
@@ -95,7 +99,9 @@ void MainWindow::readSocket()
                 this->handlePackage(pkgInNew);
             }
         }
-    }
+    } /*else {
+        qDebug() << strerror(errno);
+    }*/
 }
 
 void MainWindow::handlePackage(rcLib::Package pkgInNew)
@@ -138,33 +144,47 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew)
             ui->fc14->setValue(pkgInNew.getChannel(14)-500);
             ui->fc15->setValue(pkgInNew.getChannel(15)-500);
 
-            ui->viewCompass->resetTransform();
-            ui->viewPitch->resetTransform();
-            ui->viewRoll->resetTransform();
-            ui->viewCompass->resetTransform();
-            ui->viewCompass->rotate((pkgInNew.getChannel(3)-500)/2.0);
-            ui->viewRoll->rotate((pkgInNew.getChannel(1)-500)/2.0);
-            ui->viewPitch->rotate((pkgInNew.getChannel(2)-500)/2.0);
-            ui->viewRoll->scale(2, 2);
-            ui->viewPitch->scale(2, 2);
-            ui->viewCompass->scale(0.9, 0.9);
-
 
 
             ui->motor->setValue(pkgInNew.getChannel(13));
             ui->vtailLeft->setValue(pkgInNew.getChannel(14)-500);
             ui->vtailRight->setValue(pkgInNew.getChannel(15)-500);
-
-            rollPlot->addValue((pkgInNew.getChannel(1)-500)/2.0, 0);
-            pitchPlot->addValue((pkgInNew.getChannel(2)-500)/2.0, 0);
         break;
         case 38: // Flight-Computer
             ui->log->append("New Package from Flight-Computer");
             ui->fcp0->setValue(-pkgInNew.getChannel(0));
-            ui->fcp1->setValue(pkgInNew.getChannel(1));
+            ui->fcp1->setValue(pkgInNew.getChannel(1) / 10.0);
             ui->fcp2->setValue(pkgInNew.getChannel(2)/ 10.0);
             ui->fcp3->setValue(pkgInNew.getChannel(3) / 10.0);
-            break;
+            ui->fcp4->setValue((pkgInNew.getChannel(4)-500)/2.0);
+            ui->fcp5->setValue((pkgInNew.getChannel(5)-500)/2.0);
+            ui->fcp6->setValue((pkgInNew.getChannel(6)-500)/2.0);
+            ui->fcp7->setValue(pkgInNew.getChannel(7) / 10.0);
+            ui->fcp8->setValue(pkgInNew.getChannel(8));
+            ui->fcp9->setValue((pkgInNew.getChannel(9)-500) / 10.0);
+            ui->fcp10->setValue((pkgInNew.getChannel(10)-500) / 10.0);
+            ui->fcp11->setValue((pkgInNew.getChannel(11)-500) / 10.0);
+            ui->fcp12->setValue(pkgInNew.getChannel(12) / 50.0);
+            ui->fcp13->setValue(pkgInNew.getChannel(13));
+            ui->fcp14->setValue(pkgInNew.getChannel(14));
+            ui->fcp15->setValue(pkgInNew.getChannel(15));
+
+            ui->viewCompass->resetTransform();
+            ui->viewPitch->resetTransform();
+            ui->viewRoll->resetTransform();
+            ui->viewCompass->resetTransform();
+            ui->viewCompass->rotate((pkgInNew.getChannel(6)-500)/2.0);
+            ui->viewRoll->rotate((pkgInNew.getChannel(4)-500)/2.0);
+            ui->viewPitch->rotate((pkgInNew.getChannel(5)-500)/2.0);
+            ui->viewRoll->scale(2, 2);
+            ui->viewPitch->scale(2, 2);
+            ui->viewCompass->scale(0.9, 0.9);
+
+            rollPlot->addValue((pkgInNew.getChannel(4)-500)/2.0, 0);
+            pitchPlot->addValue((pkgInNew.getChannel(5)-500)/2.0, 0);
+            yawPlot->addValue((pkgInNew.getChannel(6)-500)/2.0, 0);
+
+        break;
         case 56: // Taranis
             ui->log->append("New Package from Taranis");
             ui->ta0->setValue(pkgInNew.getChannel(0));
@@ -186,14 +206,10 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew)
             break;
         case 74: // PDB
             ui->log->append("New Package from PDB");
-            ui->pdb0->setValue(pkgInNew.getChannel(0));
-            ui->pdb1->setValue((pkgInNew.getChannel(1)*128) / 1000.0);
-            ui->pdb2->setValue((pkgInNew.getChannel(2)*256) / 1000.0);
-            ui->pdb3->setValue((pkgInNew.getChannel(3)*32) / 1000.0);
-            ui->pdb4->setValue((pkgInNew.getChannel(4)*64) / 1000.0);
-            ui->pdb5->setValue(pkgInNew.getChannel(5));
-            ui->pdb6->setValue(pkgInNew.getChannel(6));
-            ui->pdb7->setValue(pkgInNew.getChannel(7));
+            ui->pdb0->setValue((pkgInNew.getChannel(0)*128) / 1000.0);
+            ui->pdb1->setValue((pkgInNew.getChannel(1)*256) / 1000.0);
+            ui->pdb2->setValue((pkgInNew.getChannel(2)*32) / 1000.0);
+            ui->pdb3->setValue((pkgInNew.getChannel(3)*64) / 1000.0);
             break;
         case 91: // Nav-Board
             ui->log->append("New Package from Nav");
@@ -212,4 +228,5 @@ void MainWindow::on_spinBox_valueChanged(int arg1)
 {
     pitchPlot->setXSteps(arg1);
     rollPlot->setXSteps(arg1);
+    yawPlot->setXSteps(arg1);
 }

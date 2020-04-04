@@ -9,6 +9,8 @@
 #include "plot.h"
 #include "RadioControlProtocolCpp/rcLib.hpp"
 
+#define BUF_SIZE 512
+
 namespace Ui {
 class MainWindow;
 }
@@ -30,9 +32,9 @@ protected slots:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *sceneRoll, *scenePitch, *sceneCompass;
-    Plot *rollPlot, *pitchPlot;
+    Plot *rollPlot, *pitchPlot, *yawPlot;
     QTimer *timer{nullptr};
-    uint8_t buf[512];
+    uint8_t buf[BUF_SIZE];
     void handlePackage(rcLib::Package pkgInNew);
     int fd{0};
 };
