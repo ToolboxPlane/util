@@ -206,8 +206,8 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew)
             pitchPlot->addValue((pkgInNew.getChannel(5)-500)/2.0, 0);
             yawPlot->addValue((pkgInNew.getChannel(6)-500)/2.0, 0);
             accXPlot->addValue((pkgInNew.getChannel(9)-500)/10.0, 0);
-            accYPlot->addValue((pkgInNew.getChannel(9)-500)/10.0, 0);
-            accZPlot->addValue((pkgInNew.getChannel(9)-500)/10.0, 0);
+            accYPlot->addValue((pkgInNew.getChannel(10)-500)/10.0, 0);
+            accZPlot->addValue((pkgInNew.getChannel(11)-500)/10.0, 0);
             altPlot->addValue(pkgInNew.getChannel(8), 0);
             altGndPlot->addValue(pkgInNew.getChannel(1) / 10.0, 0);
             speedPlot->addValue(pkgInNew.getChannel(7) / 10.0, 0);

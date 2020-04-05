@@ -41,7 +41,7 @@ void Plot::setXSteps(int steps)
 }
 
 
-void Plot::paintEvent(QPaintEvent *event)
+void Plot::paintEvent(QPaintEvent*)
 {
     QPainter painter(this);
     QSize size = this->size();
