@@ -62,7 +62,7 @@ void Plot::paintEvent(QPaintEvent *event)
     }
 
     for(int t = 0; t < data.length(); t++) {
-        painter.setPen(colors[t % colors.size()]);
+        painter.setPen(QPen(colors[t % colors.size()], 2));
         for(int s = 1; s < xSteps; s++) {
             int index = data[t].size() - xSteps + s;
             if(index > 0) {

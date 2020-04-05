@@ -23,7 +23,7 @@ private:
     int yNumbers = 10;
     int xNumbers = 10;
     int currT = 0;
-    double min, max = 0;
+    double min = -1, max = 1;
     QVector<QVector<double> > data;
     const QVector<QColor> colors = {Qt::blue, Qt::green, Qt::red, Qt::yellow};
 };

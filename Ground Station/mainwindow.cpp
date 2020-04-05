@@ -56,10 +56,24 @@ MainWindow::MainWindow(QWidget *parent) :
     rollPlot = new Plot();
     pitchPlot = new Plot();
     yawPlot = new Plot();
+    accXPlot = new Plot();
+    accYPlot = new Plot();
+    accZPlot = new Plot();
+    altPlot = new Plot();
+    altGndPlot = new Plot();
+    speedPlot = new Plot();
+
 
     ui->gridLayout->addWidget(rollPlot, 1,0);
-    ui->gridLayout->addWidget(pitchPlot, 1, 1);
-    ui->gridLayout->addWidget(yawPlot, 1, 2);
+    ui->gridLayout->addWidget(pitchPlot, 1, 2);
+    ui->gridLayout->addWidget(yawPlot, 1, 4);
+    ui->gridLayout->addWidget(accXPlot, 4,0);
+    ui->gridLayout->addWidget(accYPlot, 4, 2);
+    ui->gridLayout->addWidget(accZPlot, 4, 4);
+    ui->gridLayout->addWidget(altPlot, 7, 0);
+    ui->gridLayout->addWidget(altGndPlot, 7, 2);
+    ui->gridLayout->addWidget(speedPlot, 7, 4);
+
 
     ui->viewRoll->rotate(20);
     ui->viewPitch->rotate(-20);
@@ -86,6 +100,14 @@ MainWindow::~MainWindow()
     delete sceneCompass;
     delete timer;
     delete rollPlot;
+    delete pitchPlot;
+    delete yawPlot;
+    delete accXPlot;
+    delete accYPlot;
+    delete accZPlot;
+    delete altPlot;
+    delete altGndPlot;
+    delete speedPlot;
 }
 
 void MainWindow::readSocket()
@@ -134,9 +156,9 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew)
             ui->fc4->setValue(pkgInNew.getChannel(4) - 500);
             ui->fc5->setValue(pkgInNew.getChannel(5) - 500);
             ui->fc6->setValue(pkgInNew.getChannel(6)-500);
-            ui->fc7->setValue(pkgInNew.getChannel(7)-500);
-            ui->fc8->setValue(pkgInNew.getChannel(8)-500);
-            ui->fc9->setValue(pkgInNew.getChannel(9) - 500);
+            ui->fc7->setValue((pkgInNew.getChannel(7)-500) / 6.25);
+            ui->fc8->setValue((pkgInNew.getChannel(8)-500) / 6.25);
+            ui->fc9->setValue((pkgInNew.getChannel(9)-500) / 6.25);
             ui->fc10->setValue(pkgInNew.getChannel(10));
             ui->fc11->setValue(pkgInNew.getChannel(11));
             ui->fc12->setValue(pkgInNew.getChannel(12));
@@ -183,6 +205,12 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew)
             rollPlot->addValue((pkgInNew.getChannel(4)-500)/2.0, 0);
             pitchPlot->addValue((pkgInNew.getChannel(5)-500)/2.0, 0);
             yawPlot->addValue((pkgInNew.getChannel(6)-500)/2.0, 0);
+            accXPlot->addValue((pkgInNew.getChannel(9)-500)/10.0, 0);
+            accYPlot->addValue((pkgInNew.getChannel(9)-500)/10.0, 0);
+            accZPlot->addValue((pkgInNew.getChannel(9)-500)/10.0, 0);
+            altPlot->addValue(pkgInNew.getChannel(8), 0);
+            altGndPlot->addValue(pkgInNew.getChannel(1) / 10.0, 0);
+            speedPlot->addValue(pkgInNew.getChannel(7) / 10.0, 0);
 
         break;
         case 56: // Taranis

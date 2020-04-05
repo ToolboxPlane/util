@@ -32,7 +32,7 @@ protected slots:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *sceneRoll, *scenePitch, *sceneCompass;
-    Plot *rollPlot, *pitchPlot, *yawPlot;
+    Plot *rollPlot, *pitchPlot, *yawPlot, *accXPlot, *accYPlot, *accZPlot, *altPlot, *altGndPlot, *speedPlot;
     QTimer *timer{nullptr};
     uint8_t buf[BUF_SIZE];
     void handlePackage(rcLib::Package pkgInNew);
