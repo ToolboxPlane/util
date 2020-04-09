@@ -4,3 +4,6 @@
 [submodule "Ground Station/RadioControlProtocolCpp"]
 	path = Ground Station/RadioControlProtocolCpp
 	url = git@github.com:ToolboxPlane/RadioControlProtocolCpp.git
+[submodule "Ground Station/QDarkStyleSheet"]
+	path = Ground Station/QDarkStyleSheet
+	url = git@github.com:ColinDuquesnoy/QDarkStyleSheet.git

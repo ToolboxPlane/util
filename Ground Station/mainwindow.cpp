@@ -5,8 +5,12 @@
 #include <arpa/inet.h>
 #include <netinet/ip.h>
 #include <sys/socket.h>
+#include <cmath>
 
 #include <QDebug>
+#include <QFile>
+
+constexpr auto WAYPOINT_SIZE = 10;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,36 +18,50 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    QFile f(":qdarkstyle/style.qss");
+
+    if (!f.exists())   {
+        qDebug() << "Unable to set stylesheet, file not found\n";
+    }
+    else   {
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&f);
+        qApp->setStyleSheet(ts.readAll());
+    }
+
+
     sceneRoll = new QGraphicsScene(this);
     scenePitch = new QGraphicsScene(this);
     sceneCompass = new QGraphicsScene(this);
+    sceneMap = new QGraphicsScene(this);
 
     ui->viewRoll->setScene(sceneRoll);
     ui->viewPitch->setScene(scenePitch);
     ui->viewCompass->setScene(sceneCompass);
+    ui->viewMap->setScene(sceneMap);
 
-    sceneRoll->setBackgroundBrush(QBrush(Qt::white));
-    scenePitch->setBackgroundBrush(QBrush(Qt::white));
-    sceneCompass->setBackgroundBrush(QBrush(Qt::white));
+    sceneRoll->setBackgroundBrush(QBrush(Qt::black));
+    scenePitch->setBackgroundBrush(QBrush(Qt::black));
+    sceneCompass->setBackgroundBrush(QBrush(Qt::black));
+    sceneMap->setBackgroundBrush(QBrush(Qt::black));
 
-    sceneRoll->addEllipse(80, -8, 40, 16, QPen(Qt::black), QBrush(Qt::lightGray));
-    sceneRoll->addRect(0, 0, 200, 5, QPen(Qt::black), QBrush(Qt::lightGray));
-    sceneRoll->addRect(66, 0, 5, -20, QPen(Qt::black), QBrush(Qt::lightGray));
-    sceneRoll->addRect(200-(66+5), 0, 5, -20, QPen(Qt::black), QBrush(Qt::lightGray));
+    sceneRoll->addEllipse(80, -8, 40, 16, QPen(Qt::darkBlue), QBrush(Qt::lightGray));
+    sceneRoll->addRect(0, 0, 200, 5, QPen(Qt::darkBlue), QBrush(Qt::lightGray));
+    sceneRoll->addRect(66, 0, 5, -20, QPen(Qt::darkBlue), QBrush(Qt::lightGray));
+    sceneRoll->addRect(200-(66+5), 0, 5, -20, QPen(Qt::darkBlue), QBrush(Qt::lightGray));
 
     sceneRoll->addLine(100,0, 100+50, 0, QPen(Qt::green, 4));
     sceneRoll->addLine(100,0, 100, 50, QPen(Qt::blue, 4));
     sceneRoll->addLine(100-3,-3,100+3,3, QPen(Qt::red, 4));
     sceneRoll->addLine(100-3,3,100+3,-3, QPen(Qt::red, 4));
 
-    ui->viewRoll->scale(2, 2);
+    ui->viewRoll->scale(3, 3);
 
-    scenePitch->addEllipse(0, 0, 70, 16, QPen(Qt::black), QBrush(Qt::lightGray));
-    scenePitch->addRect(75,-10,-30,20, QPen(Qt::black), QBrush(Qt::lightGray));
-    scenePitch->addRect(0,5,80,5, QPen(Qt::black), QBrush(Qt::lightGray));
+    scenePitch->addEllipse(0, 0, 70, 16, QPen(Qt::darkBlue), QBrush(Qt::lightGray));
+    scenePitch->addRect(75,-10,-30,20, QPen(Qt::darkBlue), QBrush(Qt::lightGray));
+    scenePitch->addRect(0,5,80,5, QPen(Qt::darkBlue), QBrush(Qt::lightGray));
 
-    ui->viewPitch->scale(2, 2);
-
+    ui->viewPitch->scale(4, 4);
 
     scenePitch->addLine(40, 7.5, 40-50, 7.5, QPen(Qt::red, 4));
     scenePitch->addLine(40, 7.5, 40, 7.5+50, QPen(Qt::blue, 4));
@@ -53,16 +71,18 @@ MainWindow::MainWindow(QWidget *parent) :
     sceneCompass->addRect(-5,-50,10,100, QPen(Qt::black), QBrush(Qt::red));
     sceneCompass->addRect(-5,50,10,100, QPen(Qt::black), QBrush(Qt::white));
 
-    rollPlot = new Plot();
-    pitchPlot = new Plot();
-    yawPlot = new Plot();
-    accXPlot = new Plot();
-    accYPlot = new Plot();
-    accZPlot = new Plot();
-    altPlot = new Plot();
-    altGndPlot = new Plot();
-    speedPlot = new Plot();
+    sceneMap->addEllipse(-WAYPOINT_SIZE/2, -WAYPOINT_SIZE/2, WAYPOINT_SIZE, WAYPOINT_SIZE, QPen(Qt::blue), QBrush(Qt::darkGray));
+    lastX = lastY = 0;
 
+    rollPlot = new PlotWidget();
+    pitchPlot = new PlotWidget();
+    yawPlot = new PlotWidget();
+    accXPlot = new PlotWidget();
+    accYPlot = new PlotWidget();
+    accZPlot = new PlotWidget();
+    altPlot = new PlotWidget();
+    altGndPlot = new PlotWidget();
+    speedPlot = new PlotWidget();
 
     ui->gridLayout->addWidget(rollPlot, 1,0);
     ui->gridLayout->addWidget(pitchPlot, 1, 2);
@@ -70,10 +90,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->gridLayout->addWidget(accXPlot, 4,0);
     ui->gridLayout->addWidget(accYPlot, 4, 2);
     ui->gridLayout->addWidget(accZPlot, 4, 4);
-    ui->gridLayout->addWidget(altPlot, 7, 0);
-    ui->gridLayout->addWidget(altGndPlot, 7, 2);
+    ui->gridLayout->addWidget(altGndPlot, 7, 0);
+    ui->gridLayout->addWidget(altPlot, 7, 2);
     ui->gridLayout->addWidget(speedPlot, 7, 4);
-
 
     ui->viewRoll->rotate(20);
     ui->viewPitch->rotate(-20);
@@ -88,7 +107,7 @@ MainWindow::MainWindow(QWidget *parent) :
         if (!timer) {
             timer = new QTimer();
             connect(timer, SIGNAL(timeout()), this, SLOT(readSocket()));
-            timer->start(20);
+            timer->start(100);
         }
     }
 }
@@ -153,12 +172,12 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew)
             ui->fc1->setValue((pkgInNew.getChannel(1) - 500) / 2.0);
             ui->fc2->setValue((pkgInNew.getChannel(2) - 500) / 2.0);
             ui->fc3->setValue((pkgInNew.getChannel(3) - 500) / 2.0);
-            ui->fc4->setValue(pkgInNew.getChannel(4) - 500);
-            ui->fc5->setValue(pkgInNew.getChannel(5) - 500);
-            ui->fc6->setValue(pkgInNew.getChannel(6)-500);
-            ui->fc7->setValue((pkgInNew.getChannel(7)-500) / 6.25);
-            ui->fc8->setValue((pkgInNew.getChannel(8)-500) / 6.25);
-            ui->fc9->setValue((pkgInNew.getChannel(9)-500) / 6.25);
+            ui->fc4->setValue((pkgInNew.getChannel(4) - 500) / 16.0);
+            ui->fc5->setValue((pkgInNew.getChannel(5) - 500) / 16.0);
+            ui->fc6->setValue((pkgInNew.getChannel(6) - 500) / 16.0);
+            ui->fc7->setValue((pkgInNew.getChannel(7) - 500) / 6.25);
+            ui->fc8->setValue((pkgInNew.getChannel(8) - 500) / 6.25);
+            ui->fc9->setValue((pkgInNew.getChannel(9) - 500) / 6.25);
             ui->fc10->setValue(pkgInNew.getChannel(10));
             ui->fc11->setValue(pkgInNew.getChannel(11));
             ui->fc12->setValue(pkgInNew.getChannel(12));
@@ -166,7 +185,12 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew)
             ui->fc14->setValue(pkgInNew.getChannel(14)-500);
             ui->fc15->setValue(pkgInNew.getChannel(15)-500);
 
-
+            rollPlot->addValue((pkgInNew.getChannel(1)-500)/2.0, 1);
+            pitchPlot->addValue((pkgInNew.getChannel(2)-500)/2.0, 1);
+            yawPlot->addValue((pkgInNew.getChannel(3)-500)/2.0, 1);
+            accXPlot->addValue((pkgInNew.getChannel(7)-500)/6.25, 1);
+            accYPlot->addValue((pkgInNew.getChannel(8)-500)/6.25, 1);
+            accZPlot->addValue((pkgInNew.getChannel(9)-500)/6.25, 1);
 
             ui->motor->setValue(pkgInNew.getChannel(13));
             ui->vtailLeft->setValue(pkgInNew.getChannel(14)-500);
@@ -176,8 +200,8 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew)
             ui->log->append("New Package from Flight-Computer");
             ui->fcp0->setValue(-pkgInNew.getChannel(0));
             ui->fcp1->setValue(pkgInNew.getChannel(1) / 10.0);
-            ui->fcp2->setValue(pkgInNew.getChannel(2)/ 10.0);
-            ui->fcp3->setValue(pkgInNew.getChannel(3) / 10.0);
+            ui->fcp2->setValue((pkgInNew.getChannel(2)-500) / 2.0);
+            ui->fcp3->setValue(pkgInNew.getChannel(3) * 10.0);
             ui->fcp4->setValue((pkgInNew.getChannel(4)-500)/2.0);
             ui->fcp5->setValue((pkgInNew.getChannel(5)-500)/2.0);
             ui->fcp6->setValue((pkgInNew.getChannel(6)-500)/2.0);
@@ -198,9 +222,23 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew)
             ui->viewCompass->rotate((pkgInNew.getChannel(6)-500)/2.0);
             ui->viewRoll->rotate((pkgInNew.getChannel(4)-500)/2.0);
             ui->viewPitch->rotate((pkgInNew.getChannel(5)-500)/2.0);
-            ui->viewRoll->scale(2, 2);
-            ui->viewPitch->scale(2, 2);
+            ui->viewRoll->scale(3, 3);
+            ui->viewPitch->scale(4, 4);
             ui->viewCompass->scale(0.9, 0.9);
+
+            {
+                auto alpha = -((pkgInNew.getChannel(2)-500) / 2.0) - 90;
+                auto dist = pkgInNew.getChannel(3) * 10.0;
+                auto x = std::cos(alpha/180 * M_PI) * dist;
+                auto y = -std::sin(alpha/180 * M_PI) * dist;
+
+                sceneMap->addLine(lastX, lastY, x, y, QPen(Qt::blue));
+                sceneMap->addEllipse(lastX-WAYPOINT_SIZE/2, lastY-WAYPOINT_SIZE/2, WAYPOINT_SIZE, WAYPOINT_SIZE, QPen(Qt::blue), QBrush(Qt::darkGray));
+                sceneMap->addEllipse(x-WAYPOINT_SIZE/2, y-WAYPOINT_SIZE/2, WAYPOINT_SIZE, WAYPOINT_SIZE, QPen(Qt::blue), QBrush(Qt::darkGray));
+                lastX = x;
+                lastY = y;
+            }
+
 
             rollPlot->addValue((pkgInNew.getChannel(4)-500)/2.0, 0);
             pitchPlot->addValue((pkgInNew.getChannel(5)-500)/2.0, 0);
@@ -257,4 +295,40 @@ void MainWindow::on_spinBox_valueChanged(int arg1)
     pitchPlot->setXSteps(arg1);
     rollPlot->setXSteps(arg1);
     yawPlot->setXSteps(arg1);
+    accXPlot->setXSteps(arg1);
+    accYPlot->setXSteps(arg1);
+    accZPlot->setXSteps(arg1);
+    altPlot->setXSteps(arg1);
+    altGndPlot->setXSteps(arg1);
+    speedPlot->setXSteps(arg1);
+    update();
+}
+
+void MainWindow::on_buttonClear_clicked()
+{
+    pitchPlot->clear();
+    rollPlot->clear();
+    yawPlot->clear();
+    accXPlot->clear();
+    accYPlot->clear();
+    accZPlot->clear();
+    altPlot->clear();
+    altGndPlot->clear();
+    speedPlot->clear();
+    update();
+}
+
+void MainWindow::on_buttonPlus_clicked()
+{
+    ui->viewMap->scale(2, 2);
+}
+
+void MainWindow::on_buttonMinus_clicked()
+{
+    ui->viewMap->scale(0.5, 0.5);
+}
+
+void MainWindow::on_buttonReset_clicked()
+{
+    ui->viewMap->resetTransform();
 }

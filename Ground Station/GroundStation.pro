@@ -25,3 +25,6 @@ HEADERS  += mainwindow.h \
         RadioControlProtocolCpp/rcLib.hpp
 
 FORMS    += mainwindow.ui
+
+RESOURCES += QDarkStyleSheet/qdarkstyle/style.qrc
+
