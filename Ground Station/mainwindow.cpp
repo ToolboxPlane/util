@@ -10,7 +10,7 @@
 #include <QDebug>
 #include <QFile>
 
-constexpr auto WAYPOINT_SIZE = 10;
+constexpr auto WAYPOINT_SIZE = 2;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -199,18 +199,18 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew)
         case 38: // Flight-Computer
             ui->log->append("New Package from Flight-Computer");
             ui->fcp0->setValue(-pkgInNew.getChannel(0));
-            ui->fcp1->setValue(pkgInNew.getChannel(1) / 10.0);
-            ui->fcp2->setValue((pkgInNew.getChannel(2)-500) / 2.0);
-            ui->fcp3->setValue(pkgInNew.getChannel(3) * 10.0);
-            ui->fcp4->setValue((pkgInNew.getChannel(4)-500)/2.0);
-            ui->fcp5->setValue((pkgInNew.getChannel(5)-500)/2.0);
-            ui->fcp6->setValue((pkgInNew.getChannel(6)-500)/2.0);
-            ui->fcp7->setValue(pkgInNew.getChannel(7) / 10.0);
-            ui->fcp8->setValue(pkgInNew.getChannel(8));
-            ui->fcp9->setValue((pkgInNew.getChannel(9)-500) / 10.0);
-            ui->fcp10->setValue((pkgInNew.getChannel(10)-500) / 10.0);
-            ui->fcp11->setValue((pkgInNew.getChannel(11)-500) / 10.0);
-            ui->fcp12->setValue(pkgInNew.getChannel(12) / 50.0);
+            ui->fcp1->setValue(pkgInNew.getChannel(1) / 40.0);
+            ui->fcp2->setValue((pkgInNew.getChannel(2)-2000) / 10.0);
+            ui->fcp3->setValue(pkgInNew.getChannel(3));
+            ui->fcp4->setValue((pkgInNew.getChannel(4)-2000)/10.0);
+            ui->fcp5->setValue((pkgInNew.getChannel(5)-2000)/10.0);
+            ui->fcp6->setValue((pkgInNew.getChannel(6)-2000)/10.0);
+            ui->fcp7->setValue(pkgInNew.getChannel(7) / 40.0);
+            ui->fcp8->setValue(pkgInNew.getChannel(8) / 4.0);
+            ui->fcp9->setValue((pkgInNew.getChannel(9)-2000) / 40.0);
+            ui->fcp10->setValue((pkgInNew.getChannel(10)-2000) / 40.0);
+            ui->fcp11->setValue((pkgInNew.getChannel(11)-2000) / 40.0);
+            ui->fcp12->setValue(pkgInNew.getChannel(12) / 200.0);
             ui->fcp13->setValue(pkgInNew.getChannel(13));
             ui->fcp14->setValue(pkgInNew.getChannel(14));
             ui->fcp15->setValue(pkgInNew.getChannel(15));
@@ -219,16 +219,16 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew)
             ui->viewPitch->resetTransform();
             ui->viewRoll->resetTransform();
             ui->viewCompass->resetTransform();
-            ui->viewCompass->rotate((pkgInNew.getChannel(6)-500)/2.0);
-            ui->viewRoll->rotate((pkgInNew.getChannel(4)-500)/2.0);
-            ui->viewPitch->rotate((pkgInNew.getChannel(5)-500)/2.0);
+            ui->viewCompass->rotate((pkgInNew.getChannel(6)-2000)/10.0);
+            ui->viewRoll->rotate((pkgInNew.getChannel(4)-2000)/10.0);
+            ui->viewPitch->rotate((pkgInNew.getChannel(5)-2000)/10.0);
             ui->viewRoll->scale(3, 3);
             ui->viewPitch->scale(4, 4);
             ui->viewCompass->scale(0.9, 0.9);
 
             {
-                auto alpha = -((pkgInNew.getChannel(2)-500) / 2.0) - 90;
-                auto dist = pkgInNew.getChannel(3) * 10.0;
+                auto alpha = -((pkgInNew.getChannel(2)-2000) / 10.0) - 90;
+                auto dist = pkgInNew.getChannel(3);
                 auto x = std::cos(alpha/180 * M_PI) * dist;
                 auto y = -std::sin(alpha/180 * M_PI) * dist;
 
@@ -240,15 +240,15 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew)
             }
 
 
-            rollPlot->addValue((pkgInNew.getChannel(4)-500)/2.0, 0);
-            pitchPlot->addValue((pkgInNew.getChannel(5)-500)/2.0, 0);
-            yawPlot->addValue((pkgInNew.getChannel(6)-500)/2.0, 0);
-            accXPlot->addValue((pkgInNew.getChannel(9)-500)/10.0, 0);
-            accYPlot->addValue((pkgInNew.getChannel(10)-500)/10.0, 0);
-            accZPlot->addValue((pkgInNew.getChannel(11)-500)/10.0, 0);
-            altPlot->addValue(pkgInNew.getChannel(8), 0);
-            altGndPlot->addValue(pkgInNew.getChannel(1) / 10.0, 0);
-            speedPlot->addValue(pkgInNew.getChannel(7) / 10.0, 0);
+            rollPlot->addValue((pkgInNew.getChannel(4)-2000)/10.0, 0);
+            pitchPlot->addValue((pkgInNew.getChannel(5)-2000)/10.0, 0);
+            yawPlot->addValue((pkgInNew.getChannel(6)-2000)/10.0, 0);
+            accXPlot->addValue((pkgInNew.getChannel(9)-2000)/40.0, 0);
+            accYPlot->addValue((pkgInNew.getChannel(10)-2000)/40.0, 0);
+            accZPlot->addValue((pkgInNew.getChannel(11)-2000)/40.0, 0);
+            altPlot->addValue(pkgInNew.getChannel(8)/4.0, 0);
+            altGndPlot->addValue(pkgInNew.getChannel(1) / 40.0, 0);
+            speedPlot->addValue(pkgInNew.getChannel(7) / 40.0, 0);
 
         break;
         case 56: // Taranis
