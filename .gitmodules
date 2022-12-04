@@ -7,3 +7,6 @@
 [submodule "Ground Station/QDarkStyleSheet"]
 	path = Ground Station/QDarkStyleSheet
 	url = git@github.com:ColinDuquesnoy/QDarkStyleSheet.git
+[submodule "Ground Station/Messages"]
+	path = Ground Station/Messages
+	url = git@github.com:ToolboxPlane/Messages.git

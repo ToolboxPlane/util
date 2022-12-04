@@ -1,34 +1,21 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <netinet/ip.h>
-#include <sys/socket.h>
-#include <cmath>
 
 #include <QDebug>
 #include <QFile>
+#include <arpa/inet.h>
+#include <cmath>
+#include <netinet/in.h>
+#include <netinet/ip.h>
+#include <set>
+#include <sys/socket.h>
+
+#include "Messages/MessageIds.h"
+#include "ui_mainwindow.h"
 
 constexpr auto WAYPOINT_SIZE = 2;
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
-{
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
-
-    QFile f(":qdarkstyle/style.qss");
-
-    if (!f.exists())   {
-        qDebug() << "Unable to set stylesheet, file not found\n";
-    }
-    else   {
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream ts(&f);
-        qApp->setStyleSheet(ts.readAll());
-    }
-
 
     sceneRoll = new QGraphicsScene(this);
     scenePitch = new QGraphicsScene(this);
@@ -48,30 +35,31 @@ MainWindow::MainWindow(QWidget *parent) :
     sceneRoll->addEllipse(80, -8, 40, 16, QPen(Qt::darkBlue), QBrush(Qt::lightGray));
     sceneRoll->addRect(0, 0, 200, 5, QPen(Qt::darkBlue), QBrush(Qt::lightGray));
     sceneRoll->addRect(66, 0, 5, -20, QPen(Qt::darkBlue), QBrush(Qt::lightGray));
-    sceneRoll->addRect(200-(66+5), 0, 5, -20, QPen(Qt::darkBlue), QBrush(Qt::lightGray));
+    sceneRoll->addRect(200 - (66 + 5), 0, 5, -20, QPen(Qt::darkBlue), QBrush(Qt::lightGray));
 
-    sceneRoll->addLine(100,0, 100+50, 0, QPen(Qt::green, 4));
-    sceneRoll->addLine(100,0, 100, 50, QPen(Qt::blue, 4));
-    sceneRoll->addLine(100-3,-3,100+3,3, QPen(Qt::red, 4));
-    sceneRoll->addLine(100-3,3,100+3,-3, QPen(Qt::red, 4));
+    sceneRoll->addLine(100, 0, 100 + 50, 0, QPen(Qt::green, 4));
+    sceneRoll->addLine(100, 0, 100, 50, QPen(Qt::blue, 4));
+    sceneRoll->addLine(100 - 3, -3, 100 + 3, 3, QPen(Qt::red, 4));
+    sceneRoll->addLine(100 - 3, 3, 100 + 3, -3, QPen(Qt::red, 4));
 
     ui->viewRoll->scale(3, 3);
 
     scenePitch->addEllipse(0, 0, 70, 16, QPen(Qt::darkBlue), QBrush(Qt::lightGray));
-    scenePitch->addRect(75,-10,-30,20, QPen(Qt::darkBlue), QBrush(Qt::lightGray));
-    scenePitch->addRect(0,5,80,5, QPen(Qt::darkBlue), QBrush(Qt::lightGray));
+    scenePitch->addRect(75, -10, -30, 20, QPen(Qt::darkBlue), QBrush(Qt::lightGray));
+    scenePitch->addRect(0, 5, 80, 5, QPen(Qt::darkBlue), QBrush(Qt::lightGray));
 
     ui->viewPitch->scale(4, 4);
 
-    scenePitch->addLine(40, 7.5, 40-50, 7.5, QPen(Qt::red, 4));
-    scenePitch->addLine(40, 7.5, 40, 7.5+50, QPen(Qt::blue, 4));
-    scenePitch->addLine(40-3, 7.5-3, 40+3, 7.5+3, QPen(Qt::green, 4));
-    scenePitch->addLine(40-3, 7.5+3, 40+3, 7.5-3, QPen(Qt::green, 4));
+    scenePitch->addLine(40, 7.5, 40 - 50, 7.5, QPen(Qt::red, 4));
+    scenePitch->addLine(40, 7.5, 40, 7.5 + 50, QPen(Qt::blue, 4));
+    scenePitch->addLine(40 - 3, 7.5 - 3, 40 + 3, 7.5 + 3, QPen(Qt::green, 4));
+    scenePitch->addLine(40 - 3, 7.5 + 3, 40 + 3, 7.5 - 3, QPen(Qt::green, 4));
 
-    sceneCompass->addRect(-5,-50,10,100, QPen(Qt::black), QBrush(Qt::red));
-    sceneCompass->addRect(-5,50,10,100, QPen(Qt::black), QBrush(Qt::white));
+    sceneCompass->addRect(-5, -50, 10, 100, QPen(Qt::black), QBrush(Qt::red));
+    sceneCompass->addRect(-5, 50, 10, 100, QPen(Qt::black), QBrush(Qt::white));
 
-    sceneMap->addEllipse(-WAYPOINT_SIZE/2, -WAYPOINT_SIZE/2, WAYPOINT_SIZE, WAYPOINT_SIZE, QPen(Qt::blue), QBrush(Qt::darkGray));
+    sceneMap->addEllipse(-WAYPOINT_SIZE / 2, -WAYPOINT_SIZE / 2, WAYPOINT_SIZE, WAYPOINT_SIZE, QPen(Qt::blue),
+                         QBrush(Qt::darkGray));
     lastX = lastY = 0;
 
     rollPlot = new PlotWidget();
@@ -84,10 +72,10 @@ MainWindow::MainWindow(QWidget *parent) :
     altGndPlot = new PlotWidget();
     speedPlot = new PlotWidget();
 
-    ui->gridLayout->addWidget(rollPlot, 1,0);
+    ui->gridLayout->addWidget(rollPlot, 1, 0);
     ui->gridLayout->addWidget(pitchPlot, 1, 2);
     ui->gridLayout->addWidget(yawPlot, 1, 4);
-    ui->gridLayout->addWidget(accXPlot, 4,0);
+    ui->gridLayout->addWidget(accXPlot, 4, 0);
     ui->gridLayout->addWidget(accYPlot, 4, 2);
     ui->gridLayout->addWidget(accZPlot, 4, 4);
     ui->gridLayout->addWidget(altGndPlot, 7, 0);
@@ -97,6 +85,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->viewRoll->rotate(20);
     ui->viewPitch->rotate(-20);
     ui->viewCompass->rotate(45);
+
+    std::set<uint8_t> ids = {FC_ID, PDB_ID, FC_SP_ID, SBUS_ID};
+
+    for (auto id : ids) {
+        messageDecodingDatas.emplace_back(std::make_pair(
+                message_decoding_data_t{.id = id, .decodingState = DECODING_INITIAL, .len = 0, .buf = {0}},
+                pb_istream_t{}));
+    }
 
     fd = socket(AF_INET, SOCK_RAW | SOCK_NONBLOCK, 253);
     if (fd < 0) {
@@ -112,8 +108,7 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete sceneRoll;
     delete scenePitch;
     delete sceneCompass;
@@ -129,22 +124,26 @@ MainWindow::~MainWindow()
     delete speedPlot;
 }
 
-void MainWindow::readSocket()
-{
-    static rcLib::Package pkgInNew;
-    auto readed = recv(this->fd, this->buf, BUF_SIZE, 0);
+void MainWindow::readSocket() {
+    static uint8_t buf[512];
+    auto readed = recv(this->fd, buf, sizeof(buf), 0);
     if (readed > 0) {
-        auto *ip_packet = reinterpret_cast<iphdr*>(this->buf);
-        for (auto c = ip_packet->ihl*4; c < readed; c++) {
-            if (pkgInNew.decode(this->buf[c])) {
-                this->handlePackage(pkgInNew);
+        auto *ip_packet = reinterpret_cast<iphdr *>(buf);
+        for (auto c = ip_packet->ihl * 4; c < readed; c++) {
+            for (auto &[decodingData, istream] : messageDecodingDatas) {
+                if (message_decode(&decodingData, buf[c], &istream)) {
+                    switch (decodingData.id) {
+
+                    }
+                }
             }
         }
-    } /*else {
+    } else {
         qDebug() << strerror(errno);
-    }*/
+    }
 }
 
+/*
 void MainWindow::handlePackage(rcLib::Package pkgInNew)
 {
     int transmitterId = pkgInNew.getDeviceId();
@@ -233,10 +232,11 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew)
                 auto y = -std::sin(alpha/180 * M_PI) * dist;
 
                 sceneMap->addLine(lastX, lastY, x, y, QPen(Qt::blue));
-                sceneMap->addEllipse(lastX-WAYPOINT_SIZE/2, lastY-WAYPOINT_SIZE/2, WAYPOINT_SIZE, WAYPOINT_SIZE, QPen(Qt::blue), QBrush(Qt::darkGray));
-                sceneMap->addEllipse(x-WAYPOINT_SIZE/2, y-WAYPOINT_SIZE/2, WAYPOINT_SIZE, WAYPOINT_SIZE, QPen(Qt::blue), QBrush(Qt::darkGray));
-                lastX = x;
-                lastY = y;
+                sceneMap->addEllipse(lastX-WAYPOINT_SIZE/2,
+lastY-WAYPOINT_SIZE/2, WAYPOINT_SIZE, WAYPOINT_SIZE, QPen(Qt::blue),
+QBrush(Qt::darkGray)); sceneMap->addEllipse(x-WAYPOINT_SIZE/2,
+y-WAYPOINT_SIZE/2, WAYPOINT_SIZE, WAYPOINT_SIZE, QPen(Qt::blue),
+QBrush(Qt::darkGray)); lastX = x; lastY = y;
             }
 
 
@@ -285,13 +285,13 @@ void MainWindow::handlePackage(rcLib::Package pkgInNew)
             ui->nav3->setValue(pkgInNew.getChannel(3) / 100.0);
             break;
         default:
-            ui->log->append("Package from unknown transmitter with ID: " + QString::number(pkgInNew.getDeviceId()));
-            break;
+            ui->log->append("Package from unknown transmitter with ID: " +
+QString::number(pkgInNew.getDeviceId())); break;
     }
 }
+ */
 
-void MainWindow::on_spinBox_valueChanged(int arg1)
-{
+void MainWindow::on_spinBox_valueChanged(int arg1) {
     pitchPlot->setXSteps(arg1);
     rollPlot->setXSteps(arg1);
     yawPlot->setXSteps(arg1);
@@ -304,8 +304,7 @@ void MainWindow::on_spinBox_valueChanged(int arg1)
     update();
 }
 
-void MainWindow::on_buttonClear_clicked()
-{
+void MainWindow::on_buttonClear_clicked() {
     pitchPlot->clear();
     rollPlot->clear();
     yawPlot->clear();
@@ -318,17 +317,14 @@ void MainWindow::on_buttonClear_clicked()
     update();
 }
 
-void MainWindow::on_buttonPlus_clicked()
-{
+void MainWindow::on_buttonPlus_clicked() {
     ui->viewMap->scale(2, 2);
 }
 
-void MainWindow::on_buttonMinus_clicked()
-{
+void MainWindow::on_buttonMinus_clicked() {
     ui->viewMap->scale(0.5, 0.5);
 }
 
-void MainWindow::on_buttonReset_clicked()
-{
+void MainWindow::on_buttonReset_clicked() {
     ui->viewMap->resetTransform();
 }

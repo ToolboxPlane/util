@@ -1,11 +1,9 @@
-#include "mainwindow.h"
 #include <QApplication>
 
-int main(int argc, char *argv[])
-{
+#include "Widgets/MainWindow.hpp"
+int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-
+    ground_station::MainWindow mainWindow;
+    mainWindow.show();
     return a.exec();
 }

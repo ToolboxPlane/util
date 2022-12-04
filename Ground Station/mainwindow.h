@@ -7,9 +7,7 @@
 #include <QTimer>
 
 #include "plot.h"
-#include "RadioControlProtocolCpp/rcLib.hpp"
-
-#define BUF_SIZE 512
+#include "Messages/MessageDecoding.h"
 
 namespace Ui {
 class MainWindow;
@@ -42,9 +40,9 @@ private:
     QGraphicsScene *sceneRoll, *scenePitch, *sceneCompass, *sceneMap;
     PlotWidget *rollPlot, *pitchPlot, *yawPlot, *accXPlot, *accYPlot, *accZPlot, *altPlot, *altGndPlot, *speedPlot;
     QTimer *timer{nullptr};
-    uint8_t buf[BUF_SIZE];
     double lastX, lastY;
-    void handlePackage(rcLib::Package pkgInNew);
+    std::vector<std::pair<message_decoding_data_t, pb_istream_t>> messageDecodingDatas;
+    //void handlePackage(rcLib::Package pkgInNew);
     int fd{0};
 };
 
