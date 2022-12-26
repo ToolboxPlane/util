@@ -19,14 +19,17 @@ namespace ground_station {
         explicit FcWidget(QWidget *parent = nullptr);
 
       public slots:
-        void fcDataReceived(const messages::types::FlightControllerPackage &package);
+        void fcDataReceived(const messages::types::FlightControllerData &package);
 
       private:
         QVBoxLayout mainLayout;
+        QFrame seperator0, seperator1;
         DataField roll, pitch, yaw, dRoll, dPitch, dYaw;
         DataField accX, accY, accZ;
-        QFrame seperator;
         DataField motor, elevonLeft, elevonRight;
+        DataField throttleRaw, pitchRaw, rollRaw;
+        DataField throttleMixed, elevonLeftMixed, elevonRightMixed;
+        DataField isArmed, manualOverrideActive;
     };
 
 } // namespace ground_station

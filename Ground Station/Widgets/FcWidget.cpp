@@ -27,7 +27,15 @@ namespace ground_station {
         accZ{"Acc-Z"},
         motor{"Motor"},
         elevonLeft{"Elevon Left"},
-        elevonRight{"Elevon Right"} {
+        elevonRight{"Elevon Right"},
+        throttleRaw{"Throttle-Raw"},
+        pitchRaw{"Pitch-Raw"},
+        rollRaw{"Roll-Raw"},
+        throttleMixed{"Throttle Mixed"},
+        elevonLeftMixed{"Elevon Left Mixed"},
+        elevonRightMixed{"Elevon Right Mixed"},
+        isArmed{"Armed"},
+        manualOverrideActive{"Manual Override Active"} {
 
         this->setLayout(&mainLayout);
 
@@ -44,27 +52,47 @@ namespace ground_station {
         mainLayout.addWidget(&accY);
         mainLayout.addWidget(&accZ);
 
-        mainLayout.addWidget(&seperator);
+        mainLayout.addWidget(&seperator0);
 
         mainLayout.addWidget(&motor);
         mainLayout.addWidget(&elevonLeft);
         mainLayout.addWidget(&elevonRight);
 
-        seperator.setFrameShape(QFrame::HLine);
+        mainLayout.addWidget(&seperator1);
+
+        mainLayout.addWidget(&throttleRaw);
+        mainLayout.addWidget(&pitchRaw);
+        mainLayout.addWidget(&rollRaw);
+        mainLayout.addWidget(&throttleMixed);
+        mainLayout.addWidget(&elevonLeftMixed);
+        mainLayout.addWidget(&elevonRightMixed);
+        mainLayout.addWidget(&isArmed);
+        mainLayout.addWidget(&manualOverrideActive);
+
+        seperator0.setFrameShape(QFrame::HLine);
+        seperator1.setFrameShape(QFrame::HLine);
     }
 
-    void FcWidget::fcDataReceived(const messages::types::FlightControllerPackage &package) {
-        roll.set(package.roll);
-        pitch.set(package.pitch);
-        yaw.set(package.yaw);
-        dRoll.set(package.dRoll);
-        dPitch.set(package.dPitch);
-        dYaw.set(package.dYaw);
-        accX.set(package.accX);
-        accY.set(package.accY);
-        accZ.set(package.accZ);
+    void FcWidget::fcDataReceived(const messages::types::FlightControllerData &package) {
+        roll.set(package.imu.roll);
+        pitch.set(package.imu.pitch);
+        yaw.set(package.imu.yaw);
+        dRoll.set(package.imu.dRoll);
+        dPitch.set(package.imu.dPitch);
+        dYaw.set(package.imu.dYaw);
+        accX.set(package.imu.accX);
+        accY.set(package.imu.accY);
+        accZ.set(package.imu.accZ);
         motor.set(package.motor);
         elevonLeft.set(package.elevonLeft);
         elevonRight.set(package.elevonRight);
+        throttleRaw.set(package.remote.throttleRaw);
+        pitchRaw.set(package.remote.pitchRaw);
+        rollRaw.set(package.remote.rollRaw);
+        throttleMixed.set(package.remote.throttleMixed);
+        elevonLeftMixed.set(package.remote.elevonLeftMixed);
+        elevonRightMixed.set(package.remote.elevonRightMixed);
+        isArmed.set(package.remote.isArmed);
+        manualOverrideActive.set(package.remote.manualOverrideActive);
     }
 } // namespace ground_station

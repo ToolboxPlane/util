@@ -14,13 +14,13 @@ namespace ground_station {
         Q_OBJECT
 
       signals:
-        void fcDataReceived(const messages::types::FlightControllerPackage &package);
+        void fcDataReceived(const messages::types::FlightControllerData &package);
 
       public slots:
         void connectToFc();
 
       private:
-        std::optional<SerialPortHandler<messages::types::FlightControllerPackage>> fcPortHandler;
+        std::optional<SerialPortHandler<messages::types::FlightControllerData>> fcPortHandler;
     };
 
 } // namespace ground_station

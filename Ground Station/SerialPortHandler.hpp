@@ -38,13 +38,10 @@ namespace ground_station {
         // port.setStopBits(QSerialPort::OneStop);
 
         QObject::connect(&port, &QSerialPort::readyRead, [this]() {
-            pb_istream_t istream;
+            typename Conversion::ProtobufType protobufType;
             QByteArray data = port.readAll();
             for (auto byte : data) {
-                if (message_decode(&this->messageDecodingData, byte, &istream)) {
-                    typename Conversion::ProtobufType protobufType;
-                    pb_decode(&istream, Conversion::description, &protobufType);
-
+                if (message_decoding_decode(&this->messageDecodingData, byte, Conversion::description, &protobufType)) {
                     this->callback(Conversion::fromProtobuf(protobufType));
                 }
             }
